@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Setup Meeting Room</title>
+    <script src="/Scripts/jquery-1.7.2.min.js"></script>
+    <script src="/Scripts/underscore.min.js"></script>
+</head>
+    <body>
+        Setup
+    
+        <div>
+            <select id="room-lists"><option value=""></option></select>
+            <span id="room-list-throbber" style="display: none">LOADING</span>
+        </div>
+    
+        <div style="display: none" id="rooms-div">
+            <select id="rooms"></select>
+            <span id="rooms-throbber" style="display: none">LOADING</span>
+        </div>
+    
+        <div style="display: none">
+            Eventually pin area
+        </div>
+    
+        <a id="complete-setup" href="#" style="display: none;">Complete Setup</a>
+    </body>
+    
+    <script type="text/javascript">
+        
+        function loadRoomsLists(roomLists) {
+            var roomListsSelect = $('#room-lists');
+
+            _.each(roomLists, function(roomList) {
+                roomListsSelect.append($('<option/>', { value: roomList.Address }).text(roomList.Name));
+            });
+        }
+        function loadRooms(rooms) {
+            var roomsSelect = $('#rooms');
+
+            roomsSelect.empty().append($('<option>'));
+            
+            _.each(rooms, function (room) {
+                roomsSelect.append($('<option/>', { value: room.Address }).text(room.Name));
+            });
+        }
+        
+        function roomListsChanged() {
+            var curVal = $('#room-lists').val();
+            var roomsThrobber = $('#rooms-throbber');
+            var roomsDiv = $('#rooms-div');
+
+            roomsDiv.show();
+            roomsThrobber.show();
+            $.get('/api/roomlists/'+curVal+'/rooms').done(function (results) {
+                loadRooms(results);
+                roomsThrobber.hide();
+            }).fail(function () {
+                alert('error');
+                roomsThrobber.hide();
+            });
+        }
+        
+        function roomChanged() {
+            $('#complete-setup').show();
+        }
+        function completeClicked() {
+            var curRoom = $('#rooms').val();
+            var curRoomName = $('#rooms option:selected').text();
+            
+            //authenticate
+            //TODO: read pin from pin pad
+            $.post('/api/rooms/' + curRoom + '/auth', { pin: 1234 }).done(function (results) {
+
+                //redirect to rooms page
+                document.location = '/rooms/' + curRoom +'/'+curRoomName.replace(' ','-');
+
+            }).fail(function () {
+                alert('error');
+            });
+            
+        }
+
+        $(function () {
+
+            var roomListThrobber = $('#room-list-throbber');
+            $('#room-lists').change(roomListsChanged);
+            $('#rooms').change(roomChanged);
+            $('#complete-setup').click(completeClicked);
+
+            roomListThrobber.show();
+            $.get('/api/roomlists').done(function(results) {
+                loadRoomsLists(results);
+                roomListThrobber.hide();
+            }).fail(function() {
+                alert('error');
+                roomListThrobber.hide();
+            });
+        });
+    </script>
+</html>

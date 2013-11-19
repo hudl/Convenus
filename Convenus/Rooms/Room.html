@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>@!Model.RoomName</title>
+    <script src="/Scripts/jquery-1.7.2.min.js"></script>
+    <script src="/Scripts/underscore.min.js"></script>
+    <script src="/Scripts/backbone.min.js"></script>
+    <script src="/Scripts/backbone.marionette.min.js"></script>
+    <script src="/Scripts/fullcalendar.min.js"></script>
+    <script src="/Scripts/moment.min.js"></script>
+    <link rel='stylesheet' type='text/css' href='/Content/fullcalendar.css' />
+    <link rel='stylesheet' type='text/css' href='/css/main.css' />
+    
+    <script type="text/javascript">
+        var Convenus = {
+            room: '@Model.Room',
+            roomName: '@Model.RoomName',
+            refreshInterval: @Model.RefreshInterval,
+            companyName: '@Model.CompanyName'
+        };
+    </script>
+</head>
+    <body>
+        <div id="room-name">@!Model.RoomName</div>
+        
+        <div id="availability"></div>
+        
+        <div id="reservation-area"></div>
+        
+        <div id="day-view"></div>
+
+    </body>
+    <script id="availability-template" type="text/template">
+        <%= IsAvailableDescription %> <br />
+        <%= StateUntilTime %>
+    </script>
+    <script id="reservation-area-template" type="text/template">
+        <% if(HasCurrentMeeting) { %>
+            <span class="current-meeting"><%= CurrentMeetingName %></span>
+        <% } else if(!HasNextMeetingWithin15Min) { %>
+            <div>Reserve Room</div>
+            <button>15min</button>
+            <% if(!HasNextMeetingWithin30Min){ %>
+                <button>30min</button>
+            <% } %>
+            <% if(!HasNextMeetingWithin60Min){ %>
+                <button>60min</button>
+            <% } %>
+        <% } %>
+    </script>
+
+    <script src="/js/RoomModel.js"></script>
+    <script src="/js/AvailabilityView.js"></script>
+    <script src="/js/ReservationAreaView.js"></script>
+    <script src="/js/DayView.js"></script>
+
+    <script type="text/javascript">
+
+        function fetchRoom(room) {
+            room.fetch().always(function (data, textStatus) {
+                var pingInterval = Convenus.refreshInterval * 1000;
+                
+                if (textStatus == 'error') {
+                    if (data.statusText == 'Forbidden') {
+                        //auth issue
+                        //TODO: display note to user
+                    } else {
+                        //probably connection issue or server down
+                        //TODO: display note to user
+                    }
+                    //increase ping interval so we hammer server less in error scenarios
+                    pingInterval = pingInterval * 5;
+                }
+                
+                window.setTimeout(function() {
+                    fetchRoom(room);
+                }, pingInterval);
+            });
+        }
+        
+        var app = new Backbone.Marionette.Application();
+        app.addRegions({
+            availability: '#availability',
+            reservationarea: '#reservation-area',
+            wholedayview: '#day-view'
+        });
+        app.addInitializer(function(options) {
+            var availView = new AvailabilityView({model:options.room});
+            app.availability.show(availView);
+            
+            var reservationView = new ReservationAreaView({ model: options.room });
+            app.reservationarea.show(reservationView);
+            
+            var dayView = new DayView({ model: options.room });
+            app.wholedayview.show(dayView);
+        });
+
+        $(function() {
+            var room = new RoomModel({ id: Convenus.room });
+            app.start({room:room});
+
+            fetchRoom(room);
+        });
+
+    </script>
+</html>

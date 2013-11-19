@@ -1,0 +1,46 @@
+﻿body
+{
+}
+
+#room-name {
+    font-size: 24pt;
+    margin:0;
+    border: 1px solid gray;
+    text-align: left;
+}
+
+#availability {
+    margin-top: 50px;
+    font-size: 20pt;
+    float: left;
+}
+
+#reservation-area {
+    margin-top: 20px;
+    font-size: 14pt;
+    float: left;
+}
+
+#day-view {
+	width: 400px;
+	margin: 0 auto;
+        padding: 0;
+    float: right;
+	}
+
+/* Hide agenda day header */
+#day-view .fc-agenda-days thead {
+    display: none;
+}
+
+.timeline {
+	position: absolute;
+	left: 59px;
+	border: none;
+	border-top: 1px solid red;
+    border-bottom: 1px solid red;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	z-index: 999;
+}
