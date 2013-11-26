@@ -12,15 +12,15 @@
         var currentMeeting = this.model.getCurrentMeeting();
         if (currentMeeting != null) {
             //in currently meeting
-            desc = 'Occupied';
-            state = 'until ' + currentMeeting.EndTime.format('h:mm a'); //retrieve from current meeting item
+            desc = '<h1>Occupied</h1>';
+            state = '<h2>' + 'until ' + currentMeeting.EndTime.format('h:mm a') + '</h4>'; //retrieve from current meeting item
         } else {
-            desc = 'Available';
+            desc = '<h1>Available</h1>';
             var nextMeeting = this.model.getNextMeeting();
             if (nextMeeting != null) {
-                state = 'until ' + nextMeeting.StartTime.format('h:mm a');//retrieve start time of next meet
+                state = '<h2>' + 'until ' + nextMeeting.StartTime.format('h:mm a') + '</h4>';//retrieve start time of next meet
             } else {
-                state = 'for rest of day';
+                state = '<h2>for the rest of the day</h4>';
             }
         }
 

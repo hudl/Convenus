@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 
@@ -12,9 +12,8 @@
     <script src="/Scripts/backbone.marionette.min.js"></script>
     <script src="/Scripts/fullcalendar.min.js"></script>
     <script src="/Scripts/moment.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/Content/fullcalendar.css" />
-    <link rel="stylesheet" type="text/css" href="/css/main.css" />
-    <!-- <link id="vgrid" rel="stylesheet" type="text/css" href="http://basehold.it/24" /> -->
+    <link rel='stylesheet' type='text/css' href='/Content/fullcalendar.css' />
+    <link rel='stylesheet' type='text/css' href='/css/main.css' />
 
     <script type="text/javascript">
         var Convenus = {
@@ -27,46 +26,34 @@
 
 </head>
 
-    <body class="available">
+    <body>
 
-        <h2 class="room-name">@!Model.RoomName</h2>
+        <h1>@!Model.RoomName</h1>
 
         <div id="availability"></div>
 
-        <div class="lower">
-            <div class="reservation-area" id="reservation-area"></div>
-            <div class="day-view" id="day-view"></div>
-        </div>
+        <div id="reservation-area"></div>
+
+        <div id="day-view"></div>
 
     </body>
 
     <script id="availability-template" type="text/template">
-        <%= IsAvailableDescription %>
+        <%= IsAvailableDescription %> <br />
         <%= StateUntilTime %>
     </script>
     <script id="reservation-area-template" type="text/template">
         <% if(HasCurrentMeeting) { %>
-
-            <h4 class="current-meeting">Currently being used by <strong><%= CurrentMeetingName %></strong></h4>
-
+            <span class="current-meeting"><%= CurrentMeetingName %></span>
         <% } else if(!HasNextMeetingWithin15Min) { %>
-
-            <h3>Reserve Room</h3>
-
-            <div class="reservation-buttons">
-
-                <button class="btn">15 min</button>
-
-                <% if(!HasNextMeetingWithin30Min){ %>
-                    <button class="btn">30 min</button>
-                <% } %>
-
-                <% if(!HasNextMeetingWithin60Min){ %>
-                    <button class="btn">60 min</button>
-                <% } %>
-
-            </div>
-
+            <div>Reserve Room</div>
+            <button>15min</button>
+            <% if(!HasNextMeetingWithin30Min){ %>
+                <button>30min</button>
+            <% } %>
+            <% if(!HasNextMeetingWithin60Min){ %>
+                <button>60min</button>
+            <% } %>
         <% } %>
     </script>
 

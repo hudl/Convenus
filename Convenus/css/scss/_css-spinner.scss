@@ -1,0 +1,41 @@
+// Spinner
+// ************************************
+
+// Source: http://www.designcouch.com/home/why/2013/05/23/dead-simple-pure-css-loading-spinner/
+
+@include keyframes(spinner-rotation) {
+    from {
+        @include transform(rotate(0deg));
+    }
+    to {
+        @include transform(rotate(359deg));
+    }
+}
+
+@mixin css-spinner($width, $color_highlight, $color_bg, $size, $margin: 0) {
+    $spinner_width: $width;
+    $spinner_color_highlight: $color_highlight;
+    $spinner_color_wheel: $color_bg;
+    $spinner_margin: $margin;
+    $spinner_size: $size;
+
+    @include animation(spinner-rotation .75s infinite linear);
+    clear: both;
+    height: $spinner_size;
+    width: $spinner_size;
+    margin: $spinner_margin auto $spinner_margin auto;
+    position: relative;
+    border-top: $spinner_width solid $spinner_color_highlight;
+    border-left: $spinner_width solid $spinner_color_wheel;
+    border-bottom: $spinner_width solid $spinner_color_wheel;
+    border-right: $spinner_width solid $spinner_color_wheel;
+    border-radius: 100%;
+    display: block;
+
+    // If a browser doesn't support CSS animations, just hide the spinner
+    // and show the "message" a bit bigger
+    .no-cssanimations & {
+        display: none;
+    }
+
+}

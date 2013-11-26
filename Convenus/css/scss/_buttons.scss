@@ -1,0 +1,91 @@
+// Needed for the btn-loading sturf
+@import 'css-spinner';
+
+// Override Browser-Default Button Styles
+// This sure isn't too accessibility-friendly, but I can't
+// think of a better way of handling this
+button:focus {
+    outline: none;
+}
+
+// A reset for the <button> element
+.btn-plain {
+    color: $dark;
+    -webkit-appearance: none;
+    background-color: transparent;
+    border: none;
+    font-size: 100%;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: normal;
+    position: relative;
+    box-shadow: none;
+}
+
+// All the paddings and margins are based on the vertical grid
+// base unit of 24px and default font size of 16px
+
+// Separated out because its used in btn-cancel
+.btn {
+    @extend .btn-plain;
+    font-family: 'Open Sans', sans-serif;
+    position: relative;
+    top: 0;
+    font-weight: $norm;
+    vertical-align: middle;
+    border-color: $blue;
+    border-style: solid;
+    color: $blue;
+    border-radius: 2px;
+    @include rem(border-width, 1/24);
+    @include rem(font-size, (1));
+    @include rem(line-height, 1);
+    @include rem(padding-top, (11/24));
+    @include rem(padding-bottom, (11/24));
+    @include rem(padding-left, 0.5);
+    @include rem(padding-right, 0.5);
+    @include transition(0.2s);
+
+    &:hover {
+        background-image: none;
+    }
+
+    &:active {
+        top: 2px;
+    }
+
+    &:focus {
+        outline: none;
+        background-image: none;
+    }
+
+    &:disabled {
+        opacity: 0.5;
+    }
+
+}
+
+@mixin btn-loading($loading_color) {
+
+    &.btn-loading {
+        @include transition(0.3s);
+        padding-left: 36px;
+
+        &:disabled {
+            opacity: 1;
+        }
+
+        &:after {
+            @include css-spinner(4px, $loading_color, rgba($loading_color, 0.4), 16px, 0);
+            @include transition(0.3s);
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 50%;
+            margin-top: -12px;
+        }
+    }
+
+}

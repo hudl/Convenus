@@ -1,0 +1,43 @@
+// Hide Date Title
+.fc-header-title {
+    display: none;
+}
+
+// Get rid of yellow bg
+.fc-widget-content {
+    background-color: $white;
+}
+
+// get rid of borders!
+.fc-border-separate tr.fc-last th,
+.fc-border-separate tr.fc-last td {
+    border-bottom-color: transparent;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-left-color: transparent;
+}
+
+// "hide" the date at the top
+tr.fc-first.fc-last {
+    color: $white;
+}
+
+// Borders on times
+.fc-agenda-slots th {
+    border-bottom-color: transparent;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    padding-right: 10px;
+}
+
+// Borders on rows
+.fc-agenda-slots td {
+    border-left-color: transparent;
+    border-right-color: transparent;
+}
+
+.fc-event {
+    background-color: $gray-dark;
+    border-color: transparent;
+}

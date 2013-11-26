@@ -1,0 +1,145 @@
+// Reset
+@import 'scss/reset';
+
+// Bourbon & Neat
+@import 'bourbon';
+@import 'neat';
+
+// Google Fonts
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,800,700);
+
+// Partials
+@import 'scss/variables-mixins';
+@import 'scss/buttons';
+@import 'scss/override';
+
+
+// Base & Typography
+// ********************************
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: $norm;
+    color: $dark;
+}
+
+strong, b {
+    font-weight: $bold;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: $norm;
+}
+
+p {
+    @include typo(p);
+}
+
+h1 {
+    @include typo(1);
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: $xbold;
+
+    .available & {
+        background-color: $green;
+        color: $white;
+    }
+
+    .unavailable & {
+        background-color: $red;
+        color: $white;
+    }
+}
+
+h2 {
+    @include typo(2);
+    @include rem(padding-left, 1);
+    @include rem(padding-right, 1);
+    text-align: center;
+    background-color: $gray-light;
+
+    .available & {
+        color: $green;
+    }
+
+    .unavailable & {
+        color: $red;
+    }
+
+    .available &.room-name {
+        background-color: $green;
+        color: $white;
+    }
+
+    .unavailable &.room-name {
+        background-color: $red;
+        color: $white;
+    }
+}
+
+h3 {
+    @include typo(3);
+    @include rem(padding-left, 1);
+    @include rem(padding-right, 1);
+    text-align: center;
+}
+
+h4 {
+    @include rem(padding-left, 1);
+    @include rem(padding-right, 1);
+    @include typo(4);
+}
+
+
+// Specifics
+// ********************************
+
+.lower {
+    @include row;
+
+    @include respond(6) {
+        @include rem(padding, 1);
+    }
+
+}
+
+.reservation-area {
+    text-align: center;
+    @include rem(padding, 1);
+    padding-bottom: 0;
+
+    @include respond(6) {
+        @include span-columns(6);
+        @include rem(padding, 0);
+
+        h3, h4 {
+            text-align: left;
+            padding-left: 0;
+        }
+    }
+}
+
+.reservation-buttons {
+
+    @include row;
+
+    button {
+        @include span-columns(4);
+
+        @include respond(6) {
+            @include span-columns(12);
+            @include rem(margin-bottom, 1);
+        }
+    }
+
+}
+
+.day-view {
+    @include rem(padding, 1);
+
+    @include respond(6) {
+        @include span-columns(6);
+        @include rem(padding, 0);
+    }
+}
