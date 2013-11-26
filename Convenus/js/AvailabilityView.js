@@ -1,10 +1,13 @@
 ﻿var AvailabilityView = Backbone.Marionette.ItemView.extend({
-    template: '#availability-template',
+    template: '#room-availability-template',
     modelEvents: {
         'change': '_fieldsChanged'
     },
     _fieldsChanged: function () {
         this.render();
+    },
+    onRender: function () {
+        this.$el.removeClass('unavailable available').addClass((this.model.getCurrentMeeting() != null) ? 'unavailable' : 'available');
     },
     serializeData: function () {
         var desc, state;
@@ -12,21 +15,22 @@
         var currentMeeting = this.model.getCurrentMeeting();
         if (currentMeeting != null) {
             //in currently meeting
-            desc = '<h1>Occupied</h1>';
-            state = '<h2>' + 'until ' + currentMeeting.EndTime.format('h:mm a') + '</h4>'; //retrieve from current meeting item
+            desc = 'Occupied';
+            state = 'until ' + currentMeeting.EndTime.format('h:mm a'); //retrieve from current meeting item
         } else {
-            desc = '<h1>Available</h1>';
+            desc = 'Available';
             var nextMeeting = this.model.getNextMeeting();
             if (nextMeeting != null) {
-                state = '<h2>' + 'until ' + nextMeeting.StartTime.format('h:mm a') + '</h4>';//retrieve start time of next meet
+                state = 'until ' + nextMeeting.StartTime.format('h:mm a');//retrieve start time of next meet
             } else {
-                state = '<h2>for the rest of the day</h4>';
+                state = 'for the rest of the day';
             }
         }
 
         return {
             IsAvailableDescription: desc,
-            StateUntilTime: state
+            StateUntilTime: state,
+            RoomName: Convenus.roomName //inject this into the model
         };
     }
 
