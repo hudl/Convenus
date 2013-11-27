@@ -2,8 +2,8 @@
 @import 'scss/reset';
 
 // Bourbon & Neat
-@import 'bourbon';
-@import 'neat';
+@import 'scss/bourbon/bourbon';
+@import 'scss/neat/neat';
 
 // Google Fonts
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300,800,700);
@@ -142,4 +142,11 @@ h4 {
         @include span-columns(6);
         @include rem(padding, 0);
     }
+}
+
+.timeline {
+    position: absolute;
+    border-top: 2px solid $red;
+    border-bottom: 2px solid $red;
+    z-index: 100;
 }
