@@ -27,13 +27,14 @@ namespace Convenus
             SecureString password = ParsePassword(options);
             options.Password = null;
 
+            Console.WriteLine("Starting Exchange service...");
             ExchangeServiceHelper.Init(options.UserName, password);
 
             Options = options;
             var nancyHost = new NancyHost(new Uri("http://" +options.Uri + ":"+options.Port));
             nancyHost.Start();
 
-            Console.WriteLine("Running Nancy Host...");
+            Console.WriteLine("Running Nancy Host. Listening on port {0}...", options.Port);
             Console.ReadLine();
 
             nancyHost.Stop();

@@ -60,6 +60,22 @@ namespace Convenus.Api
                         Events=ExchangeServiceHelper.GetRoomAvailability((string)_.room)
                     });
                 };
+
+            Post["/rooms/{room}/reservation"] = _ =>
+            {
+                //if auth is enabled - check for the room
+                if (Program.Options.RequireAuth.GetValueOrDefault(false) && !CheckAuth((string)_.room, Request.Cookies))
+                {
+                    //NOTE: this isn't 'real' security - it won't stop people determined to use this. but seriously who is going to 
+                    //try that hard for meeting room software on an intranet
+                    return HttpStatusCode.Forbidden;
+                }
+
+                ExchangeServiceHelper.CreateReservation(_.room, int.Parse(Request.Form.duration));
+
+                return Response.AsText("").WithStatusCode(HttpStatusCode.Created);
+
+            };
         }
 
         private static bool CheckAuth(string room, IDictionary<string,string> cookies)

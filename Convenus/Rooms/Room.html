@@ -55,14 +55,14 @@
 
             <div class="reservation-buttons">
 
-                <button class="btn">15 min</button>
+                <button class="btn" data-duration="15">15 min</button>
 
                 <% if(!HasNextMeetingWithin30Min){ %>
-                    <button class="btn">30 min</button>
+                    <button class="btn" data-duration="30">30 min</button>
                 <% } %>
 
                 <% if(!HasNextMeetingWithin60Min){ %>
-                    <button class="btn">60 min</button>
+                    <button class="btn" data-duration="60">60 min</button>
                 <% } %>
 
             </div>

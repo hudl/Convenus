@@ -70,7 +70,7 @@ namespace Convenus
             //short cache just to prevent crazy accesses
             //it is recommended to keep this cache shorter than the page refresh 
             //otherwise the frequent refresh doesn't do any good
-            string RoomEventsKey = string.Format("room-events-key-{0}", roomAddress);
+            string RoomEventsKey = GetRoomEventsKey(roomAddress);
             var returnValue = (List<CalendarEvent>)_memoryCache.Get(RoomEventsKey);
             if (returnValue == null)
             {
@@ -87,7 +87,15 @@ namespace Convenus
 
                 }).OrderBy(e => e.StartTime).ToList();
 
-                //NOTE: make sure to flush if we add a manual calendar entry in the app
+                //add the pending item if necessary
+                var pendingItem = (CalendarEvent)_memoryCache.Get(GetRoomPendingEventKey(roomAddress));
+
+                //match on StartTime/EndTime because we know its unique for a given room
+                if (pendingItem != null && !returnValue.Any(c => c.EndTime.Equals(pendingItem.EndTime) && c.StartTime.Equals(pendingItem.StartTime)))
+                {
+                    returnValue.Add(pendingItem);
+                }
+
                 _memoryCache.Add(RoomEventsKey, returnValue, DateTime.Now.AddSeconds(30));
             }
 
@@ -98,6 +106,47 @@ namespace Convenus
 //                                             new CalendarView(DateTime.Today, DateTime.Today.AddDays(4)));
 
 
+        }
+
+        public static void CreateReservation(string roomAddress, int duration)
+        {
+
+            Appointment newApt = new Appointment(_exchangeService);
+            newApt.Subject = "Walk up";
+            newApt.Start = DateTime.Now;
+            newApt.StartTimeZone = TimeZoneInfo.Local;
+            newApt.End = DateTime.Now.AddMinutes(duration);
+            newApt.EndTimeZone = TimeZoneInfo.Local;
+            newApt.Resources.Add(roomAddress);
+
+            newApt.Save(SendInvitationsMode.SendOnlyToAll);
+
+            //set 'pending' item so that quick GetRoomAvailability calls
+            //won't miss this appointment just because the meeting room
+            //hasn't accepted yet. Since this only applies to  Walk Up
+            //reservations (and you can only have one of those at a time)
+            //we can store this in a single cached value
+            _memoryCache.Add(GetRoomPendingEventKey(roomAddress), 
+                new CalendarEvent()
+                {
+                    Subject = newApt.Subject,
+                    StartTime = newApt.Start,
+                    EndTime = newApt.End,
+                    Status = "Busy" 
+                }, 
+                DateTime.Now.AddMinutes(2));
+
+            _memoryCache.Remove(GetRoomEventsKey(roomAddress));
+
+        }
+
+        private static string GetRoomEventsKey(string roomAddress)
+        {
+            return string.Format("room-events-key-{0}", roomAddress);
+        }
+        private static string GetRoomPendingEventKey(string roomAddress)
+        {
+            return string.Format("room-pending-key-{0}", roomAddress);
         }
     }
 

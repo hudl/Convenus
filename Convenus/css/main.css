@@ -358,4 +358,5 @@ h4 {
   position: absolute;
   border-top: 2px solid #d81d1d;
   border-bottom: 2px solid #d81d1d;
+  margin: 0;
   z-index: 100; }

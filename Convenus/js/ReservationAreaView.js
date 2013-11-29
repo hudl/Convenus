@@ -3,8 +3,33 @@
     modelEvents: {
         'change': '_fieldsChanged'
     },
+    events:
+    {
+      'click .btn': '_reserveClicked'  
+    },
+    initialize: function () {
+        _.bindAll(this, '_reserveClicked');
+    },
     _fieldsChanged: function () {
         this.render();
+    },
+    _reserveClicked: function (e) {
+        var self = this;
+        $('.btn', this.$el).attr('disabled', true);
+        var dur = $(e.currentTarget).data('duration');
+
+        $.post('/api/rooms/' + Convenus.room + '/reservation', { duration: dur }).done(function () {
+            //refresh the event
+            //this will probably utilize the 'pending event' logic in the API
+            //since the appointment takes a couple seconds to create
+            self.model.fetch();
+            
+            $('.btn', self.$el).attr('disabled', false);
+        }).fail(function() {
+            $('.btn', self.$el).attr('disabled', false);
+        });
+        
+
     },
     serializeData: function () {
         var hasCurrentMeeting, curMeetingName, nextMeetingWithin15, nextMeetingWithin30, nextMeetingWithin60;
