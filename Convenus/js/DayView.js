@@ -2,6 +2,7 @@
 
 var DayView = Backbone.Marionette.ItemView.extend({
     _updateInterval: null,
+    _previousDayOfMonth: null,
     template: function() {
         return '';
     },
@@ -9,8 +10,13 @@ var DayView = Backbone.Marionette.ItemView.extend({
         'change': '_fieldsChanged'
     },
     _fieldsChanged: function () {
-        //update events
 
+        //if the day has changed - redraw the calendar
+        if (this._previousDayOfMonth != null && this._previousDayOfMonth != moment().date()) {
+            this._initCalendar();
+        }
+        
+        //update events
         this.$el.fullCalendar('removeEvents');
         this.$el.fullCalendar('addEventSource', this.model.get('Events'));
  
@@ -22,26 +28,37 @@ var DayView = Backbone.Marionette.ItemView.extend({
     },
     initialize: function () {
         var self = this;
-        $(function() {
-            self.$el.fullCalendar(
-              {
-                  defaultView: 'agendaDay',
-                  header: {
-                      left: '',
-                      center: 'title',
-                      right: ''
-                  },
-                  allDaySlot: false,
-                  editable: false,
-                  aspectRatio: 0.33,
-                  minTime: 6, //these should be variables
-                  maxTime: 19,
-                  eventDataTransform: self._transformEvent
-              });
-            //update the current time line every minute
-            self._updateCurrentTime();
-            self._updateInterval = window.setInterval(_.bind(self._updateCurrentTime, self), 1000 * 60);
+        $(function () {
+            self._initCalendar.call(self);
         });
+    },
+    _initCalendar: function() {
+        this.$el.empty();
+        this.$el.fullCalendar(
+          {
+              defaultView: 'agendaDay',
+              header: {
+                  left: '',
+                  center: 'title',
+                  right: ''
+              },
+              allDaySlot: false,
+              editable: false,
+              aspectRatio: 0.33,
+              minTime: 6, //these should be variables
+              maxTime: 19,
+              eventDataTransform: this._transformEvent
+          });
+        //update the current time line every minute
+        this._updateCurrentTime();
+
+        if (this._updateInterval) {
+            window.clearInterval(this._updateInterval);
+            this._updateInterval = 0;
+        }
+
+        this._updateInterval = window.setInterval(_.bind(this._updateCurrentTime, this), 1000 * 60);
+        this._previousDayOfMonth = moment().date();
     },
     _updateCurrentTime: function() {
         var parentDiv = $(".fc-agenda-slots:visible", this.$el).parent();
