@@ -9,11 +9,24 @@ namespace Convenus
 {
     class Program
     {
-        public static StartupOptions Options { get; set; }
+        internal static StartupOptions Options { get; set; }
+        private static NancyHost _currentHost;
+
         static void Main(string[] args)
         {
             //CODE NAME Convenus (kon-ven-ous) (Latin for meeting)
 
+            //use http://nssm.cc/ (External/nssm.exe) to install as a service
+            Run(args);
+
+            Console.WriteLine("Running Nancy Host. Listening on port {0}...", Options.Port);
+            Console.ReadLine();
+
+            Stop();
+
+        }
+        public static void Run(string[] args)
+        {
             var options = new StartupOptions();
             if (!CommandLine.Parser.Default.ParseArguments(args, options))
             {
@@ -31,15 +44,15 @@ namespace Convenus
             ExchangeServiceHelper.Init(options.UserName, password);
 
             Options = options;
-            var nancyHost = new NancyHost(new Uri("http://" +options.Uri + ":"+options.Port));
-            nancyHost.Start();
-
-            Console.WriteLine("Running Nancy Host. Listening on port {0}...", options.Port);
-            Console.ReadLine();
-
-            nancyHost.Stop();
-
-
+            _currentHost = new NancyHost(new Uri("http://" + options.Uri + ":" + options.Port));
+            _currentHost.Start(); 
+        }
+        public static void Stop()
+        {
+            if (_currentHost != null)
+            {
+                _currentHost.Stop();                
+            }
         }
 
         private static SecureString ParsePassword(StartupOptions options)
