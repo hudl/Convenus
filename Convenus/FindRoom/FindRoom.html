@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>@Model.Company | Find Meeting Room</title>
+    <script src="/Scripts/jquery-1.7.2.min.js"></script>
+    <script src="/Scripts/underscore.min.js"></script>
+</head>
+    <body>
+        Find Meeting Room Now (API Demo Page)
+    
+        <div>
+            <select id="room-lists"><option value=""></option></select>
+            <span id="room-list-throbber" style="display: none">LOADING</span>
+        </div>
+    
+        <div style="display: none" id="duration-div">
+            <select id="durations">
+                <option value="15">15 min</option>
+                <option value="30" selected="selected">30 min</option>
+                <option value="45">45 min</option>
+                <option value="60">60 min</option>
+            </select>
+        </div>
+    
+        <a id="complete-setup" href="#" style="display: none;">Find Available Rooms</a>
+        
+        <div id="results-div">
+            <ul>
+                
+            </ul>
+        </div>
+    </body>
+    
+    <script type="text/javascript">
+
+        function loadRoomsLists(roomLists) {
+            var roomListsSelect = $('#room-lists');
+
+            _.each(roomLists, function (roomList) {
+                roomListsSelect.append($('<option/>', { value: roomList.Address }).text(roomList.Name));
+            });
+        }
+
+        function roomListsChanged() {
+            $('#duration-div').show();
+            $('#complete-setup').show();
+        }
+
+        function completeClicked() {
+            var curRoomList = $('#room-lists option:selected').val();
+            var curDuration = $('#durations option:selected').val();
+            var resultUL = $('#results-div ul');
+            resultUL.empty();
+            resultUL.append($('<li/>').text('Loading...'));
+            
+            $.get('/api/roomlist/' + curRoomList + '/availability', { duration: curDuration }).done(function (results) {
+                console.log(results);
+                resultUL.empty();
+                
+                _.each(results, function(obj) {
+                    resultUL.append($('<li/>').text(obj.Name));
+                });
+
+            }).fail(function () {
+                alert('error');
+            });
+
+        }
+
+        $(function () {
+
+            var roomListThrobber = $('#room-list-throbber');
+            $('#room-lists').change(roomListsChanged);
+            $('#complete-setup').click(completeClicked);
+
+            roomListThrobber.show();
+            $.get('/api/roomlists').done(function (results) {
+                loadRoomsLists(results);
+                roomListThrobber.hide();
+            }).fail(function () {
+                alert('error');
+                roomListThrobber.hide();
+            });
+        });
+    </script>
+</html>

@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="Api\Api.cs" />
     <Compile Include="ExchangeServiceHelper.cs" />
+    <Compile Include="FindRoom\FindRoom.cs" />
     <Compile Include="LandingPage\LandingPage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -153,6 +154,9 @@
     </Content>
     <Content Include="favicon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FindRoom\FindRoom.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="js\AvailabilityView.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
