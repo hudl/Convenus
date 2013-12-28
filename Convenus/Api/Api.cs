@@ -76,6 +76,33 @@ namespace Convenus.Api
                 return Response.AsText("").WithStatusCode(HttpStatusCode.Created);
 
             };
+
+            Get["/roomlist/{roomlist}/availability"] = _ =>
+            {
+                var roomList = (string)_.roomlist;
+                //24hr time of room to request
+                //if null - then now
+                var time = (DynamicDictionaryValue)Request.Query["time"];
+                if (!time.HasValue)
+                {
+                    time = new DynamicDictionaryValue(DateTime.Now.ToString("HH:mm:00"));  
+                }
+
+                //in minutes
+                //defaults to 30 min
+                var duration = (DynamicDictionaryValue)Request.Query["duration"];
+                if (!duration.HasValue)
+                {
+                    duration = new DynamicDictionaryValue("30");
+                }
+
+                var requestStartTime = DateTime.Parse(time);
+                var requestEndTime = requestStartTime.AddMinutes(int.Parse(duration));
+
+                var availableRooms = ExchangeServiceHelper.GetAvailabileRoomsByRoomList(roomList, requestStartTime, requestEndTime);
+
+                return Response.AsJson(availableRooms);
+            };
         }
 
         private static bool CheckAuth(string room, IDictionary<string,string> cookies)

@@ -140,6 +140,80 @@ namespace Convenus
 
         }
 
+        public static List<Room> GetAvailabileRoomsByRoomList(string roomListAddress, DateTime requestStartTime, DateTime requestEndTime)
+        {
+
+            //holds current meeting items for each room
+            var roomHolder = new Dictionary<string, List<CalendarEvent>>();
+
+            //first get rooms for the list
+            var rooms = GetRooms(roomListAddress);
+
+            var roomsToQuery = rooms.ToList(); //copy of room list
+            //try to get room availability from cache first
+            foreach (var room in rooms)
+            {
+                var roomKey = GetRoomEventsKey(room.Address);
+                var roomAvailability = (List<CalendarEvent>)_memoryCache.Get(roomKey);
+                if (roomAvailability != null)
+                {
+                    roomsToQuery.Remove(room);
+                    roomHolder.Add(room.Address, roomAvailability);
+                }
+            }
+
+            //grab rest of rooms in one batch
+            if (roomsToQuery.Count > 0)
+            {
+                //create attendee list
+                var attendeeList = roomsToQuery.Select(r => new AttendeeInfo(r.Address, MeetingAttendeeType.Room, false)).ToList();
+                //grab info on all rooms
+                var results = _exchangeService.GetUserAvailability(attendeeList,
+                                    new TimeWindow(DateTime.Today, DateTime.Today.AddDays(1)),
+                                    AvailabilityData.FreeBusy);
+                var curRoomNum = 0;
+                foreach (var attendee in results.AttendeesAvailability)
+                {
+                    var curRoom = attendeeList[curRoomNum++].SmtpAddress;
+                    var roomKey = GetRoomEventsKey(curRoom);
+                    var roomItems = attendee.CalendarEvents.Select(e => new CalendarEvent()
+                    {
+                        Subject = e.Details.Subject,
+                        StartTime = e.StartTime,
+                        EndTime = e.EndTime,
+                        Status = e.FreeBusyStatus.ToString()
+
+                    }).OrderBy(e => e.StartTime).ToList();
+
+                    //add the pending item if necessary
+                    var pendingItem = (CalendarEvent)_memoryCache.Get(GetRoomPendingEventKey(curRoom));
+
+                    //match on StartTime/EndTime because we know its unique for a given room
+                    if (pendingItem != null && !roomItems.Any(c => c.EndTime.Equals(pendingItem.EndTime) && c.StartTime.Equals(pendingItem.StartTime)))
+                    {
+                        roomItems.Add(pendingItem);
+                    }
+
+                    //insert back into cache
+                    _memoryCache.Add(roomKey, roomItems, DateTime.Now.AddSeconds(30));
+
+                    //add to holder for later analysis
+                    roomHolder.Add(curRoom, roomItems);
+                }
+
+
+            }
+
+            //return rooms availabile in time block
+            //if any room item fails within the requested block (or overlaps) - then exclude that room
+            return (from roomKv in roomHolder
+                    where !roomKv.Value.Any(ri => 
+                        (requestStartTime >= ri.StartTime && requestStartTime <= ri.EndTime) || //start falls within 
+                        (requestEndTime >= ri.StartTime && requestEndTime <= ri.EndTime) || //end falls within
+                        (requestStartTime <= ri.StartTime && requestEndTime >= ri.EndTime)) //overlap
+                    select rooms.First(r => r.Address.Equals(roomKv.Key, StringComparison.OrdinalIgnoreCase))).ToList();
+        }
+
         private static string GetRoomEventsKey(string roomAddress)
         {
             return string.Format("room-events-key-{0}", roomAddress);
@@ -148,6 +222,8 @@ namespace Convenus
         {
             return string.Format("room-pending-key-{0}", roomAddress);
         }
+
+
     }
 
     public class RoomList
