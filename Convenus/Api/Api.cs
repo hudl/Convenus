@@ -103,6 +103,14 @@ namespace Convenus.Api
 
                 return Response.AsJson(availableRooms);
             };
+
+            //enable CORS if applicable
+            Debug.Assert(Program.Options.AllowCors != null, "Program.Options.AllowCors != null"); //note: AllowCors will always have a value since it has a default
+            if (Program.Options.AllowCors.Value)
+            {
+                After.AddItemToEndOfPipeline(x => x.Response.WithHeader("Access-Control-Allow-Origin", "*"));   
+            }
+  
         }
 
         private static bool CheckAuth(string room, IDictionary<string,string> cookies)

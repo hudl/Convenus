@@ -103,6 +103,10 @@ namespace Convenus
             {
                 options.Uri = newOptions.Uri;
             }
+            if (newOptions.AllowCors != null)
+            {
+                options.AllowCors = newOptions.AllowCors;
+            }
             if (newOptions.UserName != null)
             {
                 options.UserName = newOptions.UserName;

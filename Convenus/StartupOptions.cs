@@ -36,6 +36,9 @@ namespace Convenus
         [Option('u',"uri", DefaultValue = "localhost", HelpText = "URI to bind web server. Default: localhost")]
         public string Uri { get; set; }
 
+        [Option('c', "allow-cors", DefaultValue = true, HelpText = "Allow cross domain API access. Default: true")]
+        public bool? AllowCors { get; set; }
+
         [HelpOption]
         public string GetUsage()
         {
