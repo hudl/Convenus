@@ -40,7 +40,7 @@ namespace Convenus
                 }).OrderBy(rl => rl.Name).ToList();
 
                 //this barely changes in an organization - so cache for a while
-                _memoryCache.Add(RoomListKey, returnValue, DateTime.Now.AddHours(1));
+                _memoryCache.Add(RoomListKey, returnValue, DateTime.Now.AddHours(2));
             }
 
             return returnValue;
@@ -60,7 +60,7 @@ namespace Convenus
                 }).OrderBy(r => r.Name).ToList();
 
                 //this barely changes in an organization - so cache for a while
-                _memoryCache.Add(RoomsKey, returnValue, DateTime.Now.AddHours(1));
+                _memoryCache.Add(RoomsKey, returnValue, DateTime.Now.AddHours(2));
             }
 
             return returnValue;
@@ -96,7 +96,7 @@ namespace Convenus
                     returnValue.Add(pendingItem);
                 }
 
-                _memoryCache.Add(RoomEventsKey, returnValue, DateTime.Now.AddSeconds(30));
+                _memoryCache.Add(RoomEventsKey, returnValue, DateTime.Now.AddSeconds(45));
             }
 
             return returnValue;
@@ -195,7 +195,7 @@ namespace Convenus
                     }
 
                     //insert back into cache
-                    _memoryCache.Add(roomKey, roomItems, DateTime.Now.AddSeconds(30));
+                    _memoryCache.Add(roomKey, roomItems, DateTime.Now.AddSeconds(45));
 
                     //add to holder for later analysis
                     roomHolder.Add(curRoom, roomItems);
@@ -214,6 +214,40 @@ namespace Convenus
                     select rooms.First(r => r.Address.Equals(roomKv.Key, StringComparison.OrdinalIgnoreCase))).ToList();
         }
 
+        public static RoomList FindRoomListForRoom(string roomAddress)
+        {
+            string key = GetRoomListForRoomKey(roomAddress);
+            var roomList = (RoomList)_memoryCache.Get(key);
+            if (roomList == null)
+            {
+                //get all room lists
+                var roomLists = GetRoomLists();
+
+                foreach (var curRoomList in roomLists)
+                {
+                    //get all rooms by list
+                    var curRooms = GetRooms(curRoomList.Address);
+                    var match =
+                        curRooms.FirstOrDefault(r => r.Address.Equals(roomAddress, StringComparison.OrdinalIgnoreCase));
+                    if (match != null)
+                    {
+                        roomList = curRoomList;
+                        break;
+                    }
+
+                }
+
+                if (roomList != null)
+                {
+                    //this barely changes in an organization - so cache for a while
+                    _memoryCache.Add(key, roomList, DateTime.Now.AddDays(1));
+                }
+
+            }
+
+            return roomList;
+        }
+
         private static string GetRoomEventsKey(string roomAddress)
         {
             return string.Format("room-events-key-{0}", roomAddress);
@@ -222,6 +256,12 @@ namespace Convenus
         {
             return string.Format("room-pending-key-{0}", roomAddress);
         }
+        private static string GetRoomListForRoomKey(string roomAddress)
+        {
+            return string.Format("roomlist-for-room-key-{0}", roomAddress);
+        }
+
+
 
 
     }

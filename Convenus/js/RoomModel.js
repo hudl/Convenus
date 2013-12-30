@@ -2,7 +2,9 @@
     urlRoot: '/api/rooms/',
     defaults: {
         id: '',
-        Events: []
+        Events: [],
+        RoomList: null,
+        AvailableRooms: []
     },
     parse: function (attributes) {
         _.each(attributes.Events, function (event) {

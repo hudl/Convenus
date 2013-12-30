@@ -34,6 +34,8 @@
         <div class="lower">
             <div class="reservation-area" id="reservation-area"></div>
             <div class="day-view" id="day-view"></div>
+            
+            <div class="other-availability" id="other-availability"></div>
         </div>
 
     </body>
@@ -71,11 +73,22 @@
             <p>&nbsp;</p>
         <% } %>
     </script>
+    <script id="other-availability-template" type="text/template">
+        <% if(!IsAvailable) { %>
+        <h3>Available Rooms</h3>
+         <ul>
+             <% _.each(AvailableRooms, function(room){ %>
+                <li><%= room.Name %></li>
+             <% }); %>
+         </ul>
+        <% } %>
+    </script>
 
     <script src="/js/RoomModel.js"></script>
     <script src="/js/AvailabilityView.js"></script>
     <script src="/js/ReservationAreaView.js"></script>
     <script src="/js/DayView.js"></script>
+    <script src="/js/OtherRoomAvailabilityView.js"></script>
 
     <script type="text/javascript">
 
@@ -93,6 +106,9 @@
                     }
                     //increase ping interval so we hammer server less in error scenarios
                     pingInterval = pingInterval * 5;
+                } else {
+                    //check if room occupied
+                    //then retrieve other available rooms and bind to that view
                 }
 
                 window.setTimeout(function() {
@@ -105,7 +121,8 @@
         app.addRegions({
             roominfo: '#room-info',
             reservationarea: '#reservation-area',
-            wholedayview: '#day-view'
+            wholedayview: '#day-view',
+            otheravailability: '#other-availability'
         });
         app.addInitializer(function(options) {
             var availView = new AvailabilityView({model:options.room});
@@ -116,6 +133,9 @@
 
             var dayView = new DayView({ model: options.room });
             app.wholedayview.show(dayView);
+            
+            var otherRoomsView = new OtherRoomAvailabilityView({ model: options.room });
+            app.otheravailability.show(otherRoomsView);
         });
 
         $(function() {

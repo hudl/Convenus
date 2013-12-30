@@ -18,14 +18,12 @@ namespace Convenus.Api
         public Api() :base("/api")
         {
             //get roomlists (building, region)
-            //VERY CACHEABLE
             Get["/roomlists"] = _ =>
                 {
                     return Response.AsJson(ExchangeServiceHelper.GetRoomLists());
                 };
 
             //get the rooms for a room list
-            //CACHEABLE
             Get["/roomlists/{roomlist}/rooms"] = _ =>
                 {
                     return Response.AsJson(ExchangeServiceHelper.GetRooms((string)_.roomlist));
@@ -45,7 +43,6 @@ namespace Convenus.Api
                 };
 
             //get a rooms status
-            //SOMEWHAT CACHEABLE
             Get["/rooms/{room}"] = _ =>
                 {
                     //if auth is enabled - check for the room
@@ -55,9 +52,25 @@ namespace Convenus.Api
                         //try that hard for meeting room software on an intranet
                         return HttpStatusCode.Forbidden;
                     }
+
+                    var events = ExchangeServiceHelper.GetRoomAvailability((string) _.room);
+                    var roomList = ExchangeServiceHelper.FindRoomListForRoom((string) _.room);
+                    List<Room> availableRooms = null;
+
+                    //only need other available rooms if occupied currently
+                    if (HasCurrentMeeting(events))
+                    {
+                        //retrieve other available rooms
+                        //NOTE: if you have caching off -this will be very expensive for each room call
+                        availableRooms = ExchangeServiceHelper.GetAvailabileRoomsByRoomList(
+                            roomList.Address, DateTime.Now, DateTime.Now.AddMinutes(30));
+                    }
+
                     return Response.AsJson(new {
                         id=(string)_.room,
-                        Events=ExchangeServiceHelper.GetRoomAvailability((string)_.room)
+                        Events=events,
+                        RoomList = roomList,
+                        AvailableRooms = availableRooms
                     });
                 };
 
@@ -111,6 +124,12 @@ namespace Convenus.Api
                 After.AddItemToEndOfPipeline(x => x.Response.WithHeader("Access-Control-Allow-Origin", "*"));   
             }
   
+        }
+
+        private bool HasCurrentMeeting(List<CalendarEvent> events)
+        {
+            DateTime curTime = DateTime.Now;
+            return events.Any(e => e.StartTime <= curTime && e.EndTime >= curTime);
         }
 
         private static bool CheckAuth(string room, IDictionary<string,string> cookies)
