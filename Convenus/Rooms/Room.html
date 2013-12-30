@@ -92,6 +92,8 @@
 
     <script type="text/javascript">
 
+        var pageReloadInterval = 4 * 60 * 60 * 1000; //4hr  
+        
         function fetchRoom(room) {
             room.fetch().always(function (data, textStatus) {
                 var pingInterval = Convenus.refreshInterval * 1000;
@@ -143,6 +145,11 @@
             app.start({room:room});
 
             fetchRoom(room);
+
+            //reload the whole page everyonce in a while
+            window.setTimeout(function() {
+                window.location.reload(true);
+            }, pageReloadInterval);
         });
 
     </script>
