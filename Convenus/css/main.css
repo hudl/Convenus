@@ -195,6 +195,9 @@ h1 {
   .unavailable h1 {
     background-color: #d81d1d;
     color: white; }
+  .pending-occupied h1 {
+    background-color: #f87620;
+    color: white; }
 
 h2 {
   font-size: 36px;
@@ -215,11 +218,16 @@ h2 {
     color: #6aa220; }
   .unavailable h2 {
     color: #d81d1d; }
+  .pending-occupied h2 {
+    color: #f87620; }
   .available h2.room-name {
     background-color: #6aa220;
     color: white; }
   .unavailable h2.room-name {
     background-color: #d81d1d;
+    color: white; }
+  .pending-occupied h2.room-name {
+    background-color: #f87620;
     color: white; }
 
 h3 {

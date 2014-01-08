@@ -50,6 +50,11 @@ h1 {
         background-color: $red;
         color: $white;
     }
+
+	.pending-occupied & {
+        background-color: $orange;
+        color: $white;
+    }
 }
 
 h2 {
@@ -66,6 +71,9 @@ h2 {
     .unavailable & {
         color: $red;
     }
+	.pending-occupied & {
+        color: $orange;
+    }
 
     .available &.room-name {
         background-color: $green;
@@ -74,6 +82,11 @@ h2 {
 
     .unavailable &.room-name {
         background-color: $red;
+        color: $white;
+    }
+
+	.pending-occupied &.room-name {
+        background-color: $orange;
         color: $white;
     }
 }
