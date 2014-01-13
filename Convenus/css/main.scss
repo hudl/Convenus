@@ -2,8 +2,8 @@
 @import 'scss/reset';
 
 // Bourbon & Neat
-@import 'scss/bourbon/bourbon';
-@import 'scss/neat/neat';
+@import 'bourbon';
+@import 'neat';
 
 // Google Fonts
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300,800,700);
@@ -21,6 +21,8 @@ body {
     font-family: 'Open Sans', sans-serif;
     font-weight: $norm;
     color: $dark;
+    line-height: $v_ratio;
+    font-size: 100%;
 }
 
 strong, b {
@@ -36,71 +38,75 @@ p {
 }
 
 h1 {
-    @include typo(1);
     text-transform: uppercase;
     text-align: center;
     font-weight: $xbold;
+    @include typo(1);
+    @include rem(padding-bottom, 1);
+    color: $white;
 
     .available & {
         background-color: $green;
-        color: $white;
     }
 
     .unavailable & {
         background-color: $red;
-        color: $white;
     }
 
-	.pending-occupied & {
+    .pending-occupied & {
         background-color: $orange;
-        color: $white;
     }
 }
 
 h2 {
-    @include typo(2);
-    @include rem(padding-left, 1);
-    @include rem(padding-right, 1);
     text-align: center;
     background-color: $gray-light;
+    font-weight: $bold;
+    color: $white;
+    @include typo(2);
 
-    .available & {
-        color: $green;
+    &.room-name {
+        font-weight: $norm;
+        @include rem(padding-top, 0.5);
+        @include rem(padding-bottom, 0.5);
     }
 
-    .unavailable & {
-        color: $red;
-    }
-	.pending-occupied & {
-        color: $orange;
+    &.until {
+        @include rem(padding-top, 0.5);
+        @include rem(padding-bottom, 0.5);
+
+        .available & {
+            color: $green;
+        }
+
+        .unavailable & {
+            color: $red;
+        }
+
+        .pending-occupied & {
+            color: $orange;
+        }
     }
 
     .available &.room-name {
         background-color: $green;
-        color: $white;
     }
 
     .unavailable &.room-name {
         background-color: $red;
-        color: $white;
     }
 
-	.pending-occupied &.room-name {
+    .pending-occupied &.room-name {
         background-color: $orange;
-        color: $white;
     }
 }
 
 h3 {
     @include typo(3);
-    @include rem(padding-left, 1);
-    @include rem(padding-right, 1);
-    text-align: center;
+    @include rem(padding-bottom, 1);
 }
 
 h4 {
-    @include rem(padding-left, 1);
-    @include rem(padding-right, 1);
     @include typo(4);
 }
 
@@ -117,20 +123,21 @@ h4 {
 
 }
 
-.reservation-area {
-    text-align: center;
-    @include rem(padding, 1);
-    padding-bottom: 0;
+.left {
+    @include span-columns(6);
+}
 
-    @include respond(6) {
-        @include span-columns(6);
-        @include rem(padding, 0);
+.right {
+    @include span-columns(6);
+    @include omega;
+}
 
-        h3, h4 {
-            text-align: left;
-            padding-left: 0;
-        }
-    }
+.day-view {
+    border: 1px solid $gray-med;
+    border-radius: 2px;
+    @include rem(padding-right, 0.5);
+    @include rem(padding-left, 0.5);
+    @include rem(padding-bottom, 0.5);
 }
 
 .reservation-buttons {
@@ -138,29 +145,23 @@ h4 {
     @include row;
 
     button {
-        @include span-columns(4);
-
-        @include respond(6) {
-            @include span-columns(12);
-            @include rem(margin-bottom, 1);
-        }
+        width: 100%;
+        display: block;
+        @include row;
+        @include rem(margin-bottom, 1);
     }
 
 }
 
-.day-view {
-    @include rem(padding, 1);
+.current-meeting,
+.other-available {
+    border: 1px solid $gray-med;
+    color: $gray-dark;
+    border-radius: 2px;
+    @include rem(padding, 0.5);
+    @include rem(margin-bottom, 1);
 
-    @include respond(6) {
-        @include span-columns(6);
-        @include rem(padding, 0);
+    li {
+        font-weight: $bold;
     }
-}
-
-.timeline {
-    position: absolute;
-    border-top: 2px solid $red;
-    border-bottom: 2px solid $red;
-    margin: 0;
-    z-index: 100;
 }

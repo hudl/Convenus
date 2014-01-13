@@ -32,40 +32,47 @@
         <div id="room-info"></div>
 
         <div class="lower">
-            <div class="reservation-area" id="reservation-area"></div>
-            <div class="day-view" id="day-view"></div>
-            
-            <div class="other-availability" id="other-availability"></div>
+            <div class="left">
+                <div class="reservation-area" id="reservation-area"></div>
+                <div class="other-availability" id="other-availability"></div>
+            </div>
+            <div class="right">
+                <div class="day-view" id="day-view"></div>
+            </div>
         </div>
 
     </body>
 
     <script id="room-availability-template" type="text/template">
-            <h2 class="room-name"><%= RoomName %></h2>
-            <h1><%= IsAvailableDescription %></h1>
-            <h2><%= StateUntilTime %></h2>
+        <h2 class="room-name"><%= RoomName %></h2>
+        <h1><%= IsAvailableDescription %></h1>
+        <h2 class="until"><%= StateUntilTime %></h2>
     </script>
 
     <script id="reservation-area-template" type="text/template">
         <% if(HasCurrentMeeting) { %>
-
-            <h4 class="current-meeting">Currently being used by <strong><%= CurrentMeetingName %></strong></h4>
+            <div class="current-meeting">
+                <p>Current Meeting</p>
+                <strong><%= CurrentMeetingName %></strong>
+            </div>
 
         <% } else if(!HasNextMeetingWithin15Min) { %>
 
-            <h3>Reserve Room</h3>
+            <div class="reserve-room">
 
-            <div class="reservation-buttons">
+                <div class="reservation-buttons">
 
-                <button class="btn" data-duration="15">15 min</button>
+                    <button class="btn" data-duration="15">Reserve for 15 min</button>
 
-                <% if(!HasNextMeetingWithin30Min){ %>
-                    <button class="btn" data-duration="30">30 min</button>
-                <% } %>
+                    <% if(!HasNextMeetingWithin30Min){ %>
+                        <button class="btn" data-duration="30">Reserve for 30 min</button>
+                    <% } %>
 
-                <% if(!HasNextMeetingWithin60Min){ %>
-                    <button class="btn" data-duration="60">60 min</button>
-                <% } %>
+                    <% if(!HasNextMeetingWithin60Min){ %>
+                        <button class="btn" data-duration="60">Reserve for 60 min</button>
+                    <% } %>
+
+                </div>
 
             </div>
 
@@ -73,14 +80,18 @@
             <p>&nbsp;</p>
         <% } %>
     </script>
+
     <script id="other-availability-template" type="text/template">
         <% if(!IsAvailable) { %>
-        <h3>Available Rooms</h3>
-         <ul>
-             <% _.each(AvailableRooms, function(room){ %>
-                <li><%= room.Name %></li>
-             <% }); %>
-         </ul>
+            <div class="other-available">
+            <p>Other Available Rooms</p>
+            <ul>
+                <% _.each(AvailableRooms, function(room){ %>
+                    <li><%= room.Name %></li>
+                <% }); %>
+            </ul>
+            </div>
+
         <% } %>
     </script>
 
@@ -92,8 +103,8 @@
 
     <script type="text/javascript">
 
-        var pageReloadInterval = 4 * 60 * 60 * 1000; //4hr  
-        
+        var pageReloadInterval = 4 * 60 * 60 * 1000; //4hr
+
         function fetchRoom(room) {
             room.fetch().always(function (data, textStatus) {
                 var pingInterval = Convenus.refreshInterval * 1000;
@@ -135,7 +146,7 @@
 
             var dayView = new DayView({ model: options.room });
             app.wholedayview.show(dayView);
-            
+
             var otherRoomsView = new OtherRoomAvailabilityView({ model: options.room });
             app.otheravailability.show(otherRoomsView);
         });
