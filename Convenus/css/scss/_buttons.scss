@@ -37,11 +37,14 @@ button:focus {
     vertical-align: middle;
     border-color: $blue;
     border-style: solid;
-    color: $blue;
+    color: $white;
+    font-weight: bold;
+    background-color: $blue;
     border-radius: 2px;
+    @include linear-gradient($blue, darken($blue, 1%));
     @include rem(border-width, 1/24);
     @include rem(font-size, (1));
-    @include rem(line-height, 1);
+    @include rem(line-height, 2);
     @include rem(padding-top, (11/24));
     @include rem(padding-bottom, (11/24));
     @include rem(padding-left, 0.5);

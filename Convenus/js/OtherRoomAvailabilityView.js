@@ -7,7 +7,7 @@
         this.render();
     },
     serializeData: function () {
-        var available = this.model.getCurrentMeeting() === null;
+        var available = !this.model.getCurrentMeeting();
 
         return {
             IsAvailable: available,

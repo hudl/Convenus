@@ -44,29 +44,24 @@ $v_base_font: $v_base/$v_ratio; // 16px
 @mixin typo($arg) {
 
     @if ($arg == 1) { // h1
-        @include rem(font-size, 3);
-        @include rem(line-height, 3); // line-height must be whole numbers
-        @include rem(padding-bottom, 1);
+        @include rem(font-size, 4);
+        @include rem(line-height, 4); // line-height must be whole numbers
     }
 
     @else if ($arg == 2) { // h2
-        @include rem(font-size, 1.5);
+        @include rem(font-size, 2);
         @include rem(line-height, 2);
-        @include rem(padding-top, .5);
-        @include rem(padding-bottom, .5);
     }
 
     @else if ($arg == 3) { // h3
-        @include rem(font-size, 1);
-        @include rem(line-height, 1);
-        @include rem(padding-bottom, 1);
+        @include rem(font-size, 1.25);
+        @include rem(line-height, 2);
     }
 
     @else if ($arg == 4) { // h4
-        @include rem(font-size, (1/1.2));
+        @include rem(font-size, (1));
         @include rem(line-height, 1);
-        @include rem(padding-top, .5);
-        @include rem(padding-bottom, .5);
+        font-weight: $bold;
     }
 
     @else if ($arg == p) { // <p>

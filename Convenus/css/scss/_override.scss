@@ -41,3 +41,15 @@ tr.fc-first.fc-last {
     background-color: $gray-dark;
     border-color: transparent;
 }
+
+.fc-event-time {
+    padding-left: 4px;
+    line-height: 1;
+}
+
+.fc-event-title {
+    font-weight: $bold;
+    padding-top: 2px;
+    padding-left: 4px;
+    line-height: 1;
+}
