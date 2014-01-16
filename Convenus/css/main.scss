@@ -165,3 +165,11 @@ h4 {
         font-weight: $bold;
     }
 }
+
+.timeline {
+    position: absolute;
+    border-top: 2px solid $red;
+    border-bottom: 2px solid $red;
+    margin: 0;
+    z-index: 100;
+}
