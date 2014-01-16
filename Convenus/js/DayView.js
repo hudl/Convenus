@@ -45,7 +45,7 @@ var DayView = Backbone.Marionette.ItemView.extend({
               allDaySlot: false,
               editable: false,
               aspectRatio: 0.33,
-              minTime: 6, //these should be variables
+              minTime: 7, //these should be variables
               maxTime: 19,
               eventDataTransform: this._transformEvent
           });
