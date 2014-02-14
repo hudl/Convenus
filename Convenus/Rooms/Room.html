@@ -60,16 +60,18 @@
 
             <div class="reserve-room">
 
+                <p>Reserve this Room</p>
+
                 <div class="reservation-buttons">
 
-                    <button class="btn" data-duration="15">Reserve for 15 min</button>
+                    <button class="btn" data-duration="15">15 minutes</button>
 
                     <% if(!HasNextMeetingWithin30Min){ %>
-                        <button class="btn" data-duration="30">Reserve for 30 min</button>
+                        <button class="btn" data-duration="30">30 minutes</button>
                     <% } %>
 
                     <% if(!HasNextMeetingWithin60Min){ %>
-                        <button class="btn" data-duration="60">Reserve for 60 min</button>
+                        <button class="btn" data-duration="60">60 minutes</button>
                     <% } %>
 
                 </div>

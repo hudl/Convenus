@@ -20,9 +20,10 @@
 body {
     font-family: 'Open Sans', sans-serif;
     font-weight: $norm;
-    color: $dark;
+    color: $white;
     line-height: $v_ratio;
     font-size: 100%;
+    background-color: $base;
 }
 
 strong, b {
@@ -42,62 +43,58 @@ h1 {
     text-align: center;
     font-weight: $xbold;
     @include typo(1);
-    @include rem(padding-bottom, 1);
     color: $white;
 
     .available & {
-        background-color: $green;
+        background-color: $success;
     }
 
     .unavailable & {
-        background-color: $red;
+        background-color: $error;
     }
 
     .pending-occupied & {
-        background-color: $orange;
+        background-color: $warning;
     }
 }
 
 h2 {
     text-align: center;
-    background-color: $gray-light;
     font-weight: $bold;
     color: $white;
     @include typo(2);
+    @include rem(line-height, 3);
 
     &.room-name {
         font-weight: $norm;
-        @include rem(padding-top, 0.5);
-        @include rem(padding-bottom, 0.5);
     }
 
     &.until {
-        @include rem(padding-top, 0.5);
         @include rem(padding-bottom, 0.5);
 
         .available & {
-            color: $green;
+            background-color: $success;
         }
 
         .unavailable & {
-            color: $red;
+            background-color: $error;
         }
 
         .pending-occupied & {
-            color: $orange;
+            background-color: $warning;
         }
     }
 
     .available &.room-name {
-        background-color: $green;
+        background-color: $success;
     }
 
     .unavailable &.room-name {
-        background-color: $red;
+        background-color: $error;
     }
 
     .pending-occupied &.room-name {
-        background-color: $orange;
+        background-color: $warning;
     }
 }
 
@@ -133,43 +130,73 @@ h4 {
 }
 
 .day-view {
-    border: 1px solid $gray-med;
+    background-color: $base-2;
     border-radius: 2px;
+    color: $base-9;
     @include rem(padding-right, 0.5);
     @include rem(padding-left, 0.5);
     @include rem(padding-bottom, 0.5);
 }
 
-.reservation-buttons {
+%widget {
+    background-color: $base-2;
+    color: $base-9;
+    border-radius: 2px;
+    @include rem(margin-bottom, 1);
+    @include clearfix;
 
-    @include row;
+    p {
+        @include typo(4);
+        @include rem(padding, 0.5);
+        text-transform: uppercase;
+        font-weight: normal;
+        background-color: $base-3;
+        border-bottom: 1px solid $base-4;
+        border-radius: 2px 2px 0 0;
+    }
 
-    button {
-        width: 100%;
+    strong {
         display: block;
-        @include row;
-        @include rem(margin-bottom, 1);
+        @include typo(4);
+        @include rem(padding, 0.5);
+    }
+
+    li {
+        font-weight: $bold;
+        border-bottom: 1px solid $base-3;
+        @include typo(4);
+        @include rem(padding, 0.5);
+
+        &:last-child {
+            border-bottom: none;
+        }
     }
 
 }
 
 .current-meeting,
 .other-available {
-    border: 1px solid $gray-med;
-    color: $gray-dark;
-    border-radius: 2px;
-    @include rem(padding, 0.5);
-    @include rem(margin-bottom, 1);
+    @extend %widget;
+}
 
-    li {
-        font-weight: $bold;
+.reserve-room {
+    @extend %widget;
+
+    button {
+        width: 100%;
+        display: block;
+        @include rem(margin-bottom, 1);
     }
+}
+
+.reservation-buttons {
+    @include rem(padding, 1);
+    @include rem(padding-bottom, 0);
 }
 
 .timeline {
     position: absolute;
-    border-top: 2px solid $red;
-    border-bottom: 2px solid $red;
+    border: 2px solid $error;
     margin: 0;
     z-index: 100;
 }

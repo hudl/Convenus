@@ -1,16 +1,37 @@
 // Colors
 // ********************************
 
-$orange:          #f87620;
-$blue:            #0d8dcf;
-$yellow:          #fabe39;
-$dark:            #171919;
-$gray-dark:       #939C9C;
-$gray-light:      #f8f8f8;
-$gray-med:        #e9e9e9;
-$red:             #d81d1d;
-$green:           #6aa220;
-$white:           #ffffff;
+$white: #ffffff;
+
+$base: #1f252c;
+$base-0: darken($base, 5%);
+$base-1: lighten($base, 2.5%);
+$base-2: lighten($base, 5%);
+$base-3: lighten($base, 10%);
+$base-4: lighten($base, 15%);
+$base-5: lighten($base, 20%);
+$base-6: lighten($base, 30%);
+$base-7: lighten($base, 40%);
+$base-8: lighten($base, 50%);
+$base-9: lighten($base, 60%);
+$base-10: lighten($base, 70%);
+$base-11: lighten($base, 80%);
+
+$action-light: #2ec5d9;
+$action: #21a2b3;
+$action-dark: #197b88;
+
+$success-light: #78d62e;
+$success: #60af22;
+$success-dark: #549a1e;
+
+$warning-light: #ded137;
+$warning: #c2b520;
+$warning-dark: #968c19;
+
+$error-light: #d77272;
+$error: #c43838;
+$error-dark: #9c2d2d;
 
 
 // Font Weights
@@ -19,12 +40,6 @@ $white:           #ffffff;
 $norm:  300;
 $bold:  700;
 $xbold: 800;
-
-
-// Backgrounds
-// ********************************
-
-$dark-bg: rgba($dark, 0.1);
 
 // Vertical Rhythm
 // ********************************
