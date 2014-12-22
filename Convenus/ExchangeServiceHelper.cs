@@ -17,10 +17,10 @@ namespace Convenus
 
         public static void Init(string userName, SecureString password)
         {
-            _exchangeService = new ExchangeService(TimeZoneInfo.Local);
+            _exchangeService = new ExchangeService(TimeZoneInfo.Utc);
             _memoryCache = new MemoryCache("ExchangeCache");
-            //exchangeService.TraceEnabled = true;
-            //exchangeService.TraceEnablePrettyPrinting = true;
+            //_exchangeService.TraceEnabled = true;
+            //_exchangeService.TraceEnablePrettyPrinting = true;
 
             _exchangeService.Credentials = new NetworkCredential(userName, password);
             _exchangeService.AutodiscoverUrl(userName, url => true);
