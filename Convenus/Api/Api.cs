@@ -70,10 +70,21 @@ namespace Convenus.Api
                         id=(string)_.room,
                         Events=events,
                         RoomList = roomList,
-                        AvailableRooms = availableRooms,
-                        RoomStatus = this.GetRoomStatus(events)
+                        AvailableRooms = availableRooms
                     });
                 };
+
+            // get room status for spark core, returns a number
+            Get["/rooms/{room}/{minutes}"] = _ =>
+            {
+                //if auth is enabled - check for the room
+                if (Program.Options.RequireAuth.GetValueOrDefault(false) && !CheckAuth((string)_.room, Request.Cookies))
+                    return HttpStatusCode.Forbidden;
+
+                var events = ExchangeServiceHelper.GetRoomAvailability((string)_.room);
+                ushort result = this.GetRoomStatus(events, _.minutes);
+                return Response.AsText(result.ToString());
+            };
 
             Post["/rooms/{room}/reservation"] = _ =>
             {
@@ -133,7 +144,7 @@ namespace Convenus.Api
             return events.Any(e => e.StartTime <= curTime && e.EndTime >= curTime);
         }
 
-        private ushort GetRoomStatus(List<CalendarEvent> events)
+        private ushort GetRoomStatus(List<CalendarEvent> events, int minutes)
         {
             if (events == null || events.Count == 0)
                 //no events at all, so room is avaiable
@@ -146,8 +157,8 @@ namespace Convenus.Api
                 return (ushort)RoomStatus.Blue;
 
             var timeLeft = evt.EndTime.Subtract(now);
-            if (timeLeft.Minutes <= 5)
-                //event ending in 5 minutes
+            if (timeLeft.Minutes <= minutes)
+                //event ending in x minutes
                 return (ushort)RoomStatus.Yellow;
 
             //room is taken at the moment
