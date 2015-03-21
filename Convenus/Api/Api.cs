@@ -132,6 +132,11 @@ namespace Convenus.Api
             return events.Any(e => e.StartTime <= curTime && e.EndTime >= curTime);
         }
 
+        private ushort RoomStatus(List<CalendarEvent> events)
+        {
+            return 0;
+        }
+
         private static bool CheckAuth(string room, IDictionary<string,string> cookies)
         {
             if (!cookies.ContainsKey(AuthTokenKey)) return false;
