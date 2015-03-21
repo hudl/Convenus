@@ -291,18 +291,18 @@ namespace Convenus
         /// <summary>
         /// Cannot connect to Convenus or network error
         /// </summary>
-        Red,
+        Unknown = 0,
         /// <summary>
         /// Room is taken
         /// </summary>
-        Green,
+        Taken = 1,
         /// <summary>
         /// Room is avaiable
         /// </summary>
-        Blue,
+        Available = 2,
         /// <summary>
         /// Last x minutes until room is open
         /// </summary>
-        Yellow
+        EndOfMeeting = 3
     }
 }

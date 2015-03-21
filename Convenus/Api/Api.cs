@@ -148,21 +148,21 @@ namespace Convenus.Api
         {
             if (events == null || events.Count == 0)
                 //no events at all, so room is avaiable
-                return RoomStatus.Blue;
+                return RoomStatus.Available;
 
             var now = DateTime.Now;
             var evt = events.FirstOrDefault(e => e.StartTime <= now && e.EndTime >= now);
             if (evt == null)
                 //no matching events found, so room is available at this moment
-                return RoomStatus.Blue;
+                return RoomStatus.Available;
 
             var timeLeft = evt.EndTime.Subtract(now);
             if (timeLeft.Minutes <= minutes)
                 //event ending in x minutes
-                return RoomStatus.Yellow;
+                return RoomStatus.EndOfMeeting;
 
             //room is taken at the moment
-            return RoomStatus.Green;
+            return RoomStatus.Taken;
         }
 
         private static bool CheckAuth(string room, IDictionary<string,string> cookies)
