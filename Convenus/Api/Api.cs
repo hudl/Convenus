@@ -70,7 +70,8 @@ namespace Convenus.Api
                         id=(string)_.room,
                         Events=events,
                         RoomList = roomList,
-                        AvailableRooms = availableRooms
+                        AvailableRooms = availableRooms,
+                        RoomStatus = this.GetRoomStatus(events)
                     });
                 };
 
