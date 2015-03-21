@@ -82,8 +82,8 @@ namespace Convenus.Api
                     return HttpStatusCode.Forbidden;
 
                 var events = ExchangeServiceHelper.GetRoomAvailability((string)_.room);
-                ushort result = this.GetRoomStatus(events, _.minutes);
-                return Response.AsText(result.ToString());
+                RoomStatus result = this.GetRoomStatus(events, _.minutes);
+                return Response.AsText(((int)result).ToString());
             };
 
             Post["/rooms/{room}/reservation"] = _ =>
@@ -144,25 +144,25 @@ namespace Convenus.Api
             return events.Any(e => e.StartTime <= curTime && e.EndTime >= curTime);
         }
 
-        private ushort GetRoomStatus(List<CalendarEvent> events, int minutes)
+        private RoomStatus GetRoomStatus(List<CalendarEvent> events, int minutes)
         {
             if (events == null || events.Count == 0)
                 //no events at all, so room is avaiable
-                return (ushort)RoomStatus.Blue;
+                return RoomStatus.Blue;
 
             var now = DateTime.Now;
             var evt = events.FirstOrDefault(e => e.StartTime <= now && e.EndTime >= now);
             if (evt == null)
                 //no matching events found, so room is available at this moment
-                return (ushort)RoomStatus.Blue;
+                return RoomStatus.Blue;
 
             var timeLeft = evt.EndTime.Subtract(now);
             if (timeLeft.Minutes <= minutes)
                 //event ending in x minutes
-                return (ushort)RoomStatus.Yellow;
+                return RoomStatus.Yellow;
 
             //room is taken at the moment
-            return (ushort)RoomStatus.Green;
+            return RoomStatus.Green;
         }
 
         private static bool CheckAuth(string room, IDictionary<string,string> cookies)
