@@ -132,9 +132,25 @@ namespace Convenus.Api
             return events.Any(e => e.StartTime <= curTime && e.EndTime >= curTime);
         }
 
-        private ushort RoomStatus(List<CalendarEvent> events)
+        private ushort GetRoomStatus(List<CalendarEvent> events)
         {
-            return 0;
+            if (events == null || events.Count == 0)
+                //no events at all, so room is avaiable
+                return (ushort)RoomStatus.Blue;
+
+            var now = DateTime.Now;
+            var evt = events.FirstOrDefault(e => e.StartTime <= now && e.EndTime >= now);
+            if (evt == null)
+                //no matching events found, so room is available at this moment
+                return (ushort)RoomStatus.Blue;
+
+            var timeLeft = evt.EndTime.Subtract(now);
+            if (timeLeft.Minutes <= 5)
+                //event ending in 5 minutes
+                return (ushort)RoomStatus.Yellow;
+
+            //unknow
+            return (ushort)RoomStatus.Red;
         }
 
         private static bool CheckAuth(string room, IDictionary<string,string> cookies)
