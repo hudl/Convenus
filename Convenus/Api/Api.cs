@@ -150,8 +150,8 @@ namespace Convenus.Api
                 //event ending in 5 minutes
                 return (ushort)RoomStatus.Yellow;
 
-            //unknow
-            return (ushort)RoomStatus.Red;
+            //room is taken at the moment
+            return (ushort)RoomStatus.Green;
         }
 
         private static bool CheckAuth(string room, IDictionary<string,string> cookies)
