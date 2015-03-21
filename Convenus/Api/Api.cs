@@ -81,9 +81,16 @@ namespace Convenus.Api
                 if (Program.Options.RequireAuth.GetValueOrDefault(false) && !CheckAuth((string)_.room, Request.Cookies))
                     return HttpStatusCode.Forbidden;
 
-                var events = ExchangeServiceHelper.GetRoomAvailability((string)_.room);
-                RoomStatus result = this.GetRoomStatus(events, _.minutes);
-                return Response.AsText(((int)result).ToString());
+                try
+                {
+                    var events = ExchangeServiceHelper.GetRoomAvailability((string)_.room);
+                    RoomStatus result = this.GetRoomStatus(events, _.minutes);
+                    return Response.AsText(((int)result).ToString());
+                }
+                catch
+                {
+                    return Response.AsText(((int)RoomStatus.Unknown).ToString());
+                }
             };
 
             Post["/rooms/{room}/reservation"] = _ =>
