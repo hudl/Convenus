@@ -74,7 +74,7 @@ namespace Convenus.Api
                 };
 
             // get room status for spark core, returns a number
-            Get["/rooms/{room}/{minutes}"] = _ =>
+            Get["/rooms/{room}/minutes/{minutes}"] = _ =>
             {
                 //if auth is enabled - check for the room
                 if (Program.Options.RequireAuth.GetValueOrDefault(false) && !CheckAuth((string)_.room, Request.Cookies))
