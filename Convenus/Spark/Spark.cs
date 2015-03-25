@@ -8,11 +8,7 @@ namespace Convenus.Spark
         {
             Get["/spark"] = _ =>
                 {
-                    return View["Spark.html", new
-                    {
-                        SparkUserName = Program.Options.SparkUserName ?? "",
-                        SparkPassword = Program.Options.SparkPassword ?? ""
-                    }];
+                    return View["Spark.html"];
                 };
         }
     }

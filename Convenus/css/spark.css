@@ -1,0 +1,56 @@
+﻿#login_container .animated {
+	animation-duration: .3s;
+	padding-top: 100px;
+	-webkit-animation-duration: .3s;
+}
+
+#login_container h1,
+#devices h1 {
+	font-weight: lighter;
+	text-align: center;
+	padding-bottom: 20px;
+}
+
+#devices {
+	padding-top: 100px;
+}
+
+#devices .button {
+	height: initial;
+	margin-right: 10px;
+	padding-top: 10px;
+}
+
+#devices i {
+	font-size: 75px;
+}
+
+.skinny {
+	max-width:400px;
+	margin: auto;
+}
+
+button.available {
+	background-color: #33C3F0;
+	border-color: #33C3F0;
+}
+
+button.taken {
+	background-color: #DFF2BF;
+	border-color: #DFF2BF;
+}
+
+button.end-of-meeting {
+	background-color: #FEEFB3;
+	border-color: #FEEFB3;
+}
+
+button.error {
+	background-color: #FFBABA;
+	border-color: #FFBABA;
+}
+
+button.party {
+	background-color: white;
+	border-color: #BBB;
+}

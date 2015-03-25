@@ -18,12 +18,6 @@ namespace Convenus
         [Option('p', "password", HelpText = "Office 365 user password. Required.")]
         public string Password { get; set; }
 
-        [Option('U', "spark-user-name", HelpText = "Spark Username to manage spark cores")]
-        public string SparkUserName { get; set; }
-
-        [Option('P', "spark-password", HelpText = "Spark Password to manage spark cores")]
-        public string SparkPassword { get; set; }
-
         [Option('c', "company", HelpText = "Company Name. Default: <none>")]
         public string CompanyName { get; set; }
 
