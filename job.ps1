@@ -40,10 +40,10 @@ $data = @{}
 $data += @{"bojackson@hudl.com" = $env:SparkCoreDeviceId}
 $result = "bojackson@hudl.com" | Get-RoomStatus
 foreach ($r in $result.GetEnumerator()){
-    Write-Output "$($r.Name): $($r.Value)"
     $deviceId = $data[$($r.Name)]
-    Write-Output "Device Id: $deviceId"
-    #$url = "https://api.spark.io/v1/devices/$env:SparkCoreDeviceId/led"
-    #$postParams = @{access_token=$env:SparkCoreAccessToken;params='LOW'}
-    #Invoke-WebRequest -Uri $url -Method Post -Body $postParams
+    #Write-Output "$($r.Name): $($r.Value)"
+    #Write-Output "Device Id: $deviceId"
+    $url = "https://api.spark.io/v1/devices/$deviceId/led"
+    $postParams = @{access_token=$env:SparkCoreAccessToken;params='LOW'}
+    Invoke-WebRequest -Uri $url -Method Post -Body $postParams
 }
