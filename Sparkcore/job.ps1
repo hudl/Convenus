@@ -44,6 +44,6 @@ foreach ($r in $result.GetEnumerator()){
     #Write-Output "$($r.Name): $($r.Value)"
     #Write-Output "Device Id: $deviceId"
     $url = "https://api.spark.io/v1/devices/$deviceId/led"
-    $postParams = @{access_token=$env:SparkCoreAccessToken;params='LOW'}
+    $postParams = @{access_token=$env:SparkCoreAccessToken;params='HIGH'}
     Invoke-WebRequest -Uri $url -Method Post -Body $postParams
 }
