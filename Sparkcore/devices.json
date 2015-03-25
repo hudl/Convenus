@@ -1,0 +1,6 @@
+{
+	cores:[
+		{name: "bojackson@hudl.com", deviceId: "_deviceId_"},
+		{name: "gordie@hudl.com", deviceId: "_deviceId_"}
+	]
+}
