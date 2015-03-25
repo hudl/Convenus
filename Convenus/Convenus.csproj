@@ -67,7 +67,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\Api.cs" />
-    <Compile Include="Spark\Spark.cs" />
+    <Compile Include="Spark\Spark.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="ExchangeServiceHelper.cs" />
     <Compile Include="FindRoom\FindRoom.cs" />
     <Compile Include="LandingPage\LandingPage.cs" />
@@ -84,14 +86,22 @@
     <None Include="Scripts\jquery-2.0.3.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Spark\Spark.html" />
+    <Content Include="Spark\Spark.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\fullcalendar.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\fullcalendar.print.css" />
-    <Content Include="Content\Skeleton\base.css" />
-    <Content Include="Content\Skeleton\layout.css" />
-    <Content Include="Content\Skeleton\skeleton.css" />
+    <Content Include="Content\Skeleton\base.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Skeleton\layout.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Skeleton\skeleton.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
