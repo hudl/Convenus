@@ -74,6 +74,25 @@ namespace Convenus.Api
                     });
                 };
 
+            // get room status for spark core, returns a number
+            Get["/rooms/{room}/{minutes}"] = _ =>
+            {
+                //if auth is enabled - check for the room
+                if (Program.Options.RequireAuth.GetValueOrDefault(false) && !CheckAuth((string)_.room, Request.Cookies))
+                    return HttpStatusCode.Forbidden;
+
+                try
+                {
+                    var events = ExchangeServiceHelper.GetRoomAvailability((string)_.room);
+                    RoomStatus result = this.GetRoomStatus(events, _.minutes);
+                    return Response.AsText(((int)result).ToString());
+                }
+                catch
+                {
+                    return Response.AsText(((int)RoomStatus.Unknown).ToString());
+                }
+            };
+
             Post["/rooms/{room}/reservation"] = _ =>
             {
                 //if auth is enabled - check for the room
@@ -130,6 +149,27 @@ namespace Convenus.Api
         {
             DateTime curTime = DateTime.Now;
             return events.Any(e => e.StartTime <= curTime && e.EndTime >= curTime);
+        }
+
+        private RoomStatus GetRoomStatus(List<CalendarEvent> events, int minutes)
+        {
+            if (events == null || events.Count == 0)
+                //no events at all, so room is avaiable
+                return RoomStatus.Available;
+
+            var now = DateTime.Now;
+            var evt = events.FirstOrDefault(e => e.StartTime <= now && e.EndTime >= now);
+            if (evt == null)
+                //no matching events found, so room is available at this moment
+                return RoomStatus.Available;
+
+            var timeLeft = evt.EndTime.Subtract(now);
+            if (timeLeft.Minutes <= minutes)
+                //event ending in x minutes
+                return RoomStatus.EndOfMeeting;
+
+            //room is taken at the moment
+            return RoomStatus.Taken;
         }
 
         private static bool CheckAuth(string room, IDictionary<string,string> cookies)

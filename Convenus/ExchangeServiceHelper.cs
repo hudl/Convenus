@@ -285,4 +285,24 @@ namespace Convenus
         public string Subject { get; set; }
 
     }
+
+    public enum RoomStatus
+    {
+        /// <summary>
+        /// Cannot connect to Convenus or network error
+        /// </summary>
+        Unknown = 0,
+        /// <summary>
+        /// Room is taken
+        /// </summary>
+        Taken = 1,
+        /// <summary>
+        /// Room is avaiable
+        /// </summary>
+        Available = 2,
+        /// <summary>
+        /// Last x minutes until room is open
+        /// </summary>
+        EndOfMeeting = 3
+    }
 }
