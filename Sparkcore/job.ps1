@@ -38,14 +38,14 @@ function Get-RoomStatus
 
 $jsonFile = "C:\Temp\devices.json"
 $jsonObj = Get-Content $jsonFile -Raw | ConvertFrom-Json
-$cores=@{}
-foreach ($p in $jsonObj.cores.psobject.properties.name){
-    $cores[$p]=$jsonObj.cores.$p
+$rooms=@{}
+foreach ($p in $jsonObj.rooms.psobject.properties.name){
+    $rooms[$p]=$jsonObj.rooms.$p
 }
 
-$result = "bojackson@hudl.com" | Get-RoomStatus
+$result = $rooms.Keys | Get-RoomStatus
 foreach ($r in $result.GetEnumerator()){
-    $deviceId = $cores[$($r.Name)]
+    $deviceId = $rooms[$($r.Name)]
     Write-Output "Device Id: $deviceId"
     $url = "https://api.spark.io/v1/devices/$deviceId/led"
     $postParams = @{access_token=$env:SparkCoreAccessToken;params='LOW'}

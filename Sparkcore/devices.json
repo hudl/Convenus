@@ -1,6 +1,6 @@
 {
-    "cores": {
-        "bojackson@hudl.com":   "_deviceId",
-		"gordie@hudl.com":      "_deviceId"
+    "rooms": {
+    	"_roomName": "_deviceId",
+		"_roomName": "_deviceId"
     }
 }
