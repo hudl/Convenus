@@ -46,8 +46,8 @@ foreach ($p in $jsonObj.rooms.psobject.properties.name){
 $result = $rooms.Keys | Get-RoomStatus
 foreach ($r in $result.GetEnumerator()){
     $deviceId = $rooms[$($r.Name)]
-    Write-Output "Device Id: $deviceId"
+    $status = $r.Value
     $url = "https://api.spark.io/v1/devices/$deviceId/led"
-    $postParams = @{access_token=$env:SparkCoreAccessToken;params='LOW'}
+    $postParams = @{access_token=$env:SparkCoreAccessToken;params="$status"}
     Invoke-RestMethod $url -Method Post -Body $postParams
 }
