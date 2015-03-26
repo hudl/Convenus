@@ -26,7 +26,7 @@ function Get-RoomStatus
     }
     Process
     {
-        $url = "http://calendars/api/rooms/$Room/5"
+        $url = "http://calendars/api/rooms/$Room/minutes/5"
         $status = Invoke-RestMethod $url
         $result += @{"$Room" = $status}
     }
