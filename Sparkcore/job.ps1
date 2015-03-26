@@ -36,14 +36,18 @@ function Get-RoomStatus
     }
 }
 
-$data = @{}
-$data += @{"bojackson@hudl.com" = $env:SparkCoreDeviceId}
+$jsonFile = "C:\Temp\devices.json"
+$jsonObj = Get-Content $jsonFile -Raw | ConvertFrom-Json
+$cores=@{}
+foreach ($p in $jsonObj.cores.psobject.properties.name){
+    $cores[$p]=$jsonObj.cores.$p
+}
+
 $result = "bojackson@hudl.com" | Get-RoomStatus
 foreach ($r in $result.GetEnumerator()){
-    $deviceId = $data[$($r.Name)]
-    #Write-Output "$($r.Name): $($r.Value)"
-    #Write-Output "Device Id: $deviceId"
+    $deviceId = $cores[$($r.Name)]
+    Write-Output "Device Id: $deviceId"
     $url = "https://api.spark.io/v1/devices/$deviceId/led"
-    $postParams = @{access_token=$env:SparkCoreAccessToken;params='HIGH'}
-    Invoke-WebRequest -Uri $url -Method Post -Body $postParams
+    $postParams = @{access_token=$env:SparkCoreAccessToken;params='LOW'}
+    Invoke-RestMethod $url -Method Post -Body $postParams
 }
