@@ -4,8 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Runtime.Caching;
 using System.Security;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Exchange.WebServices.Data;
 
 namespace Convenus
@@ -303,6 +301,10 @@ namespace Convenus
         /// <summary>
         /// Last x minutes until room is open
         /// </summary>
-        EndOfMeeting = 3
+        EndOfMeeting = 3,
+        /// <summary>
+        /// Room is a party
+        /// </summary>
+        Party = 4
     }
 }
