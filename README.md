@@ -20,6 +20,7 @@ Example configuration file (convenus.config):
 	Password: "mySecurePassword",
 	CompanyName: "MyCompany",
 	Port: 1234,
-	RequireAuth: true
+	RequireAuth: true,
+	EnableSpark: true
 }
 ```

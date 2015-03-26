@@ -8,7 +8,11 @@ namespace Convenus.Spark
         {
             Get["/spark"] = _ =>
                 {
-                    return View["Spark.html"];
+                    if (Program.Options.EnableSpark.HasValue && (bool) Program.Options.EnableSpark)
+                    {
+                        return View["Spark.html"];
+                    }
+                    return HttpStatusCode.NotFound;
                 };
         }
     }

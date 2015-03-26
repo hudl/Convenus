@@ -111,6 +111,10 @@ namespace Convenus
             {
                 options.UserName = newOptions.UserName;
             }
+            if (newOptions.EnableSpark != null)
+            {
+                options.EnableSpark = newOptions.EnableSpark;
+            }
 
             options.ConfigFileName = null; //make sure this isn't available later
         }
