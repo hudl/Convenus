@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using Nancy;
 using Nancy.Helpers;
 
@@ -75,7 +74,7 @@ namespace Convenus.Api
                 };
 
             // get room status for spark core, returns a number
-            Get["/rooms/{room}/{minutes}"] = _ =>
+            Get["/rooms/{room}/minutes/{minutes}"] = _ =>
             {
                 //if auth is enabled - check for the room
                 if (Program.Options.RequireAuth.GetValueOrDefault(false) && !CheckAuth((string)_.room, Request.Cookies))
@@ -154,19 +153,31 @@ namespace Convenus.Api
         private RoomStatus GetRoomStatus(List<CalendarEvent> events, int minutes)
         {
             if (events == null || events.Count == 0)
+            {
                 //no events at all, so room is avaiable
                 return RoomStatus.Available;
+            }
 
             var now = DateTime.Now;
             var evt = events.FirstOrDefault(e => e.StartTime <= now && e.EndTime >= now);
             if (evt == null)
+            {
                 //no matching events found, so room is available at this moment
-                return RoomStatus.Available;
+                return RoomStatus.Available; 
+            }
+
+            if (evt.Subject.ToLower().Contains("party"))
+            {
+                //event is a party, so make it one
+                return RoomStatus.Party;
+            }
 
             var timeLeft = evt.EndTime.Subtract(now);
             if (timeLeft.Minutes <= minutes)
+            {
                 //event ending in x minutes
                 return RoomStatus.EndOfMeeting;
+            }
 
             //room is taken at the moment
             return RoomStatus.Taken;
