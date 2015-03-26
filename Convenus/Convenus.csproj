@@ -83,6 +83,75 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="css\main.scss" />
+    <None Include="css\scss\animate\animations\attention-seekers\_bounce.scss" />
+    <None Include="css\scss\animate\animations\attention-seekers\_flash.scss" />
+    <None Include="css\scss\animate\animations\attention-seekers\_pulse.scss" />
+    <None Include="css\scss\animate\animations\attention-seekers\_shake.scss" />
+    <None Include="css\scss\animate\animations\attention-seekers\_swing.scss" />
+    <None Include="css\scss\animate\animations\attention-seekers\_tada.scss" />
+    <None Include="css\scss\animate\animations\attention-seekers\_wiggle.scss" />
+    <None Include="css\scss\animate\animations\attention-seekers\_wobble.scss" />
+    <None Include="css\scss\animate\animations\bounce-enter\_bounceIn.scss" />
+    <None Include="css\scss\animate\animations\bounce-enter\_bounceInDown.scss" />
+    <None Include="css\scss\animate\animations\bounce-enter\_bounceInLeft.scss" />
+    <None Include="css\scss\animate\animations\bounce-enter\_bounceInRight.scss" />
+    <None Include="css\scss\animate\animations\bounce-enter\_bounceInUp.scss" />
+    <None Include="css\scss\animate\animations\bounce-exit\_bounceOut.scss" />
+    <None Include="css\scss\animate\animations\bounce-exit\_bounceOutDown.scss" />
+    <None Include="css\scss\animate\animations\bounce-exit\_bounceOutLeft.scss" />
+    <None Include="css\scss\animate\animations\bounce-exit\_bounceOutRight.scss" />
+    <None Include="css\scss\animate\animations\bounce-exit\_bounceOutUp.scss" />
+    <None Include="css\scss\animate\animations\fade-enter\_fadeIn.scss" />
+    <None Include="css\scss\animate\animations\fade-enter\_fadeInDown.scss" />
+    <None Include="css\scss\animate\animations\fade-enter\_fadeInDownBig.scss" />
+    <None Include="css\scss\animate\animations\fade-enter\_fadeInLeft.scss" />
+    <None Include="css\scss\animate\animations\fade-enter\_fadeInLeftBig.scss" />
+    <None Include="css\scss\animate\animations\fade-enter\_fadeInRight.scss" />
+    <None Include="css\scss\animate\animations\fade-enter\_fadeInRightBig.scss" />
+    <None Include="css\scss\animate\animations\fade-enter\_fadeInUp.scss" />
+    <None Include="css\scss\animate\animations\fade-enter\_fadeInUpBig.scss" />
+    <None Include="css\scss\animate\animations\fade-exit\_fadeOut.scss" />
+    <None Include="css\scss\animate\animations\fade-exit\_fadeOutDown.scss" />
+    <None Include="css\scss\animate\animations\fade-exit\_fadeOutDownBig.scss" />
+    <None Include="css\scss\animate\animations\fade-exit\_fadeOutLeft.scss" />
+    <None Include="css\scss\animate\animations\fade-exit\_fadeOutLeftBig.scss" />
+    <None Include="css\scss\animate\animations\fade-exit\_fadeOutRight.scss" />
+    <None Include="css\scss\animate\animations\fade-exit\_fadeOutRightBig.scss" />
+    <None Include="css\scss\animate\animations\fade-exit\_fadeOutUp.scss" />
+    <None Include="css\scss\animate\animations\fade-exit\_fadeOutUpBig.scss" />
+    <None Include="css\scss\animate\animations\flippers\_flip.scss" />
+    <None Include="css\scss\animate\animations\flippers\_flipInX.scss" />
+    <None Include="css\scss\animate\animations\flippers\_flipInY.scss" />
+    <None Include="css\scss\animate\animations\flippers\_flipOutX.scss" />
+    <None Include="css\scss\animate\animations\flippers\_flipOutY.scss" />
+    <None Include="css\scss\animate\animations\lightspeed\_lightSpeedIn.scss" />
+    <None Include="css\scss\animate\animations\lightspeed\_lightSpeedOut.scss" />
+    <None Include="css\scss\animate\animations\rotate-enter\_rotateIn.scss" />
+    <None Include="css\scss\animate\animations\rotate-enter\_rotateInDownLeft.scss" />
+    <None Include="css\scss\animate\animations\rotate-enter\_rotateInDownRight.scss" />
+    <None Include="css\scss\animate\animations\rotate-enter\_rotateInUpLeft.scss" />
+    <None Include="css\scss\animate\animations\rotate-enter\_rotateInUpRight.scss" />
+    <None Include="css\scss\animate\animations\rotate-exit\_rotateOut.scss" />
+    <None Include="css\scss\animate\animations\rotate-exit\_rotateOutDownLeft.scss" />
+    <None Include="css\scss\animate\animations\rotate-exit\_rotateOutDownRight.scss" />
+    <None Include="css\scss\animate\animations\rotate-exit\_rotateOutUpLeft.scss" />
+    <None Include="css\scss\animate\animations\rotate-exit\_rotateOutUpRight.scss" />
+    <None Include="css\scss\animate\animations\special\_hinge.scss" />
+    <None Include="css\scss\animate\animations\special\_rollIn.scss" />
+    <None Include="css\scss\animate\animations\special\_rollOut.scss" />
+    <None Include="css\scss\animate\animations\zoom-enter\_zoomIn.scss" />
+    <None Include="css\scss\animate\animations\zoom-enter\_zoomInDown.scss" />
+    <None Include="css\scss\animate\animations\zoom-enter\_zoomInLeft.scss" />
+    <None Include="css\scss\animate\animations\zoom-enter\_zoomInRight.scss" />
+    <None Include="css\scss\animate\animations\zoom-enter\_zoomInUp.scss" />
+    <None Include="css\scss\animate\animations\zoom-exit\_zoomOut.scss" />
+    <None Include="css\scss\animate\animations\zoom-exit\_zoomOutDown.scss" />
+    <None Include="css\scss\animate\animations\zoom-exit\_zoomOutLeft.scss" />
+    <None Include="css\scss\animate\animations\zoom-exit\_zoomOutRight.scss" />
+    <None Include="css\scss\animate\animations\zoom-exit\_zoomOutUp.scss" />
+    <None Include="css\scss\animate\helpers\_mixins.scss" />
+    <None Include="css\scss\animate\helpers\_settings.scss" />
+    <None Include="css\scss\animate\_animate.scss" />
     <None Include="css\scss\bourbon\addons\_button.scss" />
     <None Include="css\scss\bourbon\addons\_clearfix.scss" />
     <None Include="css\scss\bourbon\addons\_font-family.scss" />
@@ -153,24 +222,26 @@
     <None Include="css\scss\neat\settings\_visual-grid.scss" />
     <None Include="css\scss\neat\_neat-helpers.scss" />
     <None Include="css\scss\neat\_neat.scss" />
+    <None Include="css\scss\_skeleton.scss" />
     <None Include="css\scss\_buttons.scss" />
     <None Include="css\scss\_css-spinner.scss" />
     <None Include="css\scss\_font-face.scss" />
     <None Include="css\scss\_override.scss" />
     <None Include="css\scss\_reset.scss" />
     <None Include="css\scss\_variables-mixins.scss" />
+    <None Include="css\spark.css.map">
+      <DependentUpon>spark.css</DependentUpon>
+    </None>
+    <None Include="css\spark.scss" />
     <None Include="packages.config" />
     <None Include="Scripts\jquery-2.0.3.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="css\lib\animate.min.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="css\lib\skeleton.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="css\spark.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="css\spark.min.css">
+      <DependentUpon>spark.css</DependentUpon>
     </Content>
     <Content Include="js\Spark\device-collection-view.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
