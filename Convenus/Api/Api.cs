@@ -164,7 +164,7 @@ namespace Convenus.Api
                 return RoomStatus.Available;
 
             var timeLeft = evt.EndTime.Subtract(now);
-            if (timeLeft.Minutes <= minutes)
+            if (timeLeft.TotalMinutes <= minutes)
                 //event ending in x minutes
                 return RoomStatus.EndOfMeeting;
 
