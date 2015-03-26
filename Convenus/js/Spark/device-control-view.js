@@ -16,7 +16,7 @@ define(['marionette', 'radio', 'js/Spark/room-status.js'],
 			},
 			onControlClick: function(e) {
 				spark.getDevice(this.options.id).then(function(device) {
-					// parse device functions... access api... WOO
+				    device.callFunction('updateRoom', $(e.currentTarget).data('val'));
 				});
 			}
 		});

@@ -65,27 +65,27 @@ body {
 }
 
 button {
-    .available {
-	    background-color: #33C3F0;
-	    border-color: #33C3F0;
-    }
-
-    .taken {
+    &.available {
 	    background-color: #DFF2BF;
 	    border-color: #DFF2BF;
     }
 
-    .end-of-meeting {
+    &.taken {
+	    background-color: #33C3F0;
+	    border-color: #33C3F0;
+    }
+
+    &.end-of-meeting {
 	    background-color: #FEEFB3;
 	    border-color: #FEEFB3;
     }
 
-    .error {
+    &.error {
 	    background-color: #FFBABA;
 	    border-color: #FFBABA;
     }
 
-    .party {
+    &.party {
 	    background-color: white;
 	    border-color: #BBB;
     }
