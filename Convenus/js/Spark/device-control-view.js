@@ -16,7 +16,7 @@ define(['marionette', 'radio', 'js/Spark/room-status.js'],
 			},
 			onControlClick: function(e) {
 				spark.getDevice(this.options.id).then(function(device) {
-				    device.callFunction('updateRoom', $(e.currentTarget).data('val'));
+				    device.callFunction('led', $(e.currentTarget).data('val'));
 				});
 			}
 		});
