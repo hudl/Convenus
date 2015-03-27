@@ -1,7 +1,6 @@
 Convenus
 ========
 
-
 A basic web application to show meeting room status. Runs self-hosted Nancy server. Windows/Mono compatible.
 
 On Windows you may need to open the hosting port as admin before running. 
@@ -21,6 +20,13 @@ Example configuration file (convenus.config):
 	CompanyName: "MyCompany",
 	Port: 1234,
 	RequireAuth: true,
-	EnableSpark: true
+	EnableSpark: false
 }
 ```
+
+Spark Core NeoPixel Display
+========
+
+Convenus integrates with spark cores which control [NeoPixel](https://www.adafruit.com/products/1138) light strips that can be placed around a window or door each meeting room. Each spark core is automatically updated with the status of each room when [a routine job](https://github.com/hudl/Convenus/blob/master/Sparkcore/job.ps1) is ran on the server.
+
+When EnableSpark is set to true in the config or on the command line, then a new route `/spark` is enabled. This allows a user to manage multiple spark cores that have the Convenus firmware falshed on them (Firmware can be found [here](https://github.com/hudl/Convenus/tree/master/Sparkcore/Firmware)).
