@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Configure</title>
+
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" type="text/css" href="/css/spark.css" />
+
+    <!-- Scripts
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/sparkjs/0.4.2/spark.min.js"></script>
+    <script type="text/javascript">
+        var require = {
+            baseUrl: '/',
+            paths: {
+                jquery: 'Scripts/jquery-2.0.3.min',
+                underscore: 'Scripts/underscore.min',
+                backbone: 'Scripts/backbone.min',
+                marionette: 'Scripts/backbone.marionette.min',
+                radio: 'Scripts/backbone.radio.min'
+            },
+            shim: {
+                jquery: {
+                    exports: '$'
+                },
+                underscore: {
+                    exports: '_'
+                },
+                backbone: {
+                    deps: ['jquery', 'underscore'],
+                    exports: 'Backbone'
+                },
+                marionette: {
+                    deps: ['jquery', 'underscore', 'backbone'],
+                    exports: 'Marionette'
+                }
+            }
+        };
+    </script>
+    <script type="text/javascript" data-main="/js/Spark/spark-main.js" src="/Scripts/require.js"></script>
+</head>
+<body>
+    <div id="login_container" class="container"></div>
+    <div id="devices" class="container animated fadeIn" style="display:none">
+        <h1>Devices</h1>
+        <div class="row">
+            <div id="device_container" class="eight columns"></div>
+            <div id="device_control_container" class="four columns"></div>
+        </div>
+    </div>
+</body>
+
+<script type="text/template" id="login_template">
+    <h1>Spark.io Login</h1>
+    <form class="skinny">
+        <label for="spark_username">Username:</label>
+        <input class="u-full-width" type="text" id="spark_username">
+        <label for="spark_password">Password:</label>
+        <input class="u-full-width" type="password" id="spark_password">
+        <input class="button-primary" type="submit" value="Submit">
+    </form>
+</script>
+
+<script type="text/template" id="device_template">
+    <div class="button">
+        <i class="fa fa-lightbulb-o fa-6"></i>
+        <br><%= name %>
+    </div>
+</script>
+
+<script type="text/template" id="device_control_template">
+    <button class="available u-full-width" data-val="<%= available %>">Available</button>
+    <button class="taken u-full-width" data-val="<%= taken %>">Taken</button>
+    <button class="end-of-meeting u-full-width" data-val="<%= endOfMeeting %>">End Of Meeting</button>
+    <button class="error u-full-width" data-val="<%= error %>">Error</button>
+    <button class="party u-full-width" data-val="<%= party %>">Party</button>
+</script>
+
+</html>

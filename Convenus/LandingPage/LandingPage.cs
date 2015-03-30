@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Nancy;
+﻿using Nancy;
 
-namespace Convenus
+namespace Convenus.LandingPage
 {
     public class LandingPage : NancyModule
     {
@@ -13,7 +8,11 @@ namespace Convenus
         {
             Get["/"] = _ =>
                 {
-                    return View["LandingPage.html", new { Company = Program.Options.CompanyName ?? "Convenus" }];
+                    return View["LandingPage.html", new
+                    {
+                        Company = Program.Options.CompanyName ?? "Convenus",
+                        EnableSpark = Program.Options.EnableSpark ?? false
+                    }];
                 };
 
         }

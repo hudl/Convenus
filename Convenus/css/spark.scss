@@ -1,0 +1,92 @@
+﻿// Reset
+@import 'scss/reset';
+
+// Fonts
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,600);
+@import url(http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css);
+
+$use-fadeIn: true;
+$use-fadeInDown: true;
+$use-fadeOutUp: true;
+
+@import 'scss/animate/animate';
+@import 'scss/skeleton';
+
+body {
+    -webkit-backface-visibility: hidden; // Addresses a small issue in webkit: http://bit.ly/NEdoDq
+}
+
+.animated {
+    @include animate-prefixer(animation-duration, $base-duration);
+    @include animate-prefixer(animation-fill-mode, both);
+
+    &.hinge {
+        @include animate-prefixer(animation-duration, $base-duration * 2);
+    }
+}
+
+#login_container {
+    .animated {
+	    animation-duration: .3s;
+	    padding-top: 100px;
+	    -webkit-animation-duration: .3s;
+    }
+
+    h1 {
+	font-weight: lighter;
+	text-align: center;
+	padding-bottom: 20px;
+    }
+}
+
+#devices {
+	padding-top: 100px;
+
+    h1 {
+	    font-weight: lighter;
+	    text-align: center;
+	    padding-bottom: 20px;
+    }
+
+    .button {
+	    height: initial;
+	    margin-right: 10px;
+	    padding-top: 10px;
+    }
+
+    i {
+	    font-size: 75px;
+    }
+}
+
+.skinny {
+	max-width:400px;
+	margin: auto;
+}
+
+button {
+    &.available {
+	    background-color: #DFF2BF;
+	    border-color: #DFF2BF;
+    }
+
+    &.taken {
+	    background-color: #33C3F0;
+	    border-color: #33C3F0;
+    }
+
+    &.end-of-meeting {
+	    background-color: #FEEFB3;
+	    border-color: #FEEFB3;
+    }
+
+    &.error {
+	    background-color: #FFBABA;
+	    border-color: #FFBABA;
+    }
+
+    &.party {
+	    background-color: white;
+	    border-color: #BBB;
+    }
+}

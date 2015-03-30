@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using CommandLine;
+﻿using CommandLine;
 using CommandLine.Text;
 
 namespace Convenus
@@ -38,6 +34,9 @@ namespace Convenus
 
         [Option('c', "allow-cors", DefaultValue = true, HelpText = "Allow cross domain API access. Default: true")]
         public bool? AllowCors { get; set; }
+
+        [Option('s', "enable-spark", DefaultValue = false, HelpText = "Enable spark based meeting room light status")]
+        public bool? EnableSpark { get; set; }
 
         [HelpOption]
         public string GetUsage()
