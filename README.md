@@ -1,5 +1,6 @@
 Convenus
 ========
+[![](https://img.shields.io/badge/hudl-OSS-orange.svg)](http://hudl.github.io/)
 
 A basic web application to show meeting room status. Runs self-hosted Nancy server. Windows/Mono compatible.
 
